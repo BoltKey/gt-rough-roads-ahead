@@ -78,7 +78,7 @@ let app = {
 				document.getElementById("button-wrap").appendChild(button);
 			}
 			else {
-				document.getElementById("card-area").appendChild(button);
+				document.getElementById("rough-roads-deck").appendChild(button);
 			}
 		}
 		this.updateButtonStrings();
@@ -92,6 +92,7 @@ let app = {
 		document.getElementById("help-button").addEventListener("click", function(e) {this.helpClick()}.bind(this));
 		document.getElementById("discard-number").addEventListener("click", function(e) {this.discardDeckClick()}.bind(this));
 		document.getElementById("scenario-picker-logo").addEventListener("click", function(e) {this.changeTab("scenario-picker")}.bind(this));
+		document.getElementById("logo").addEventListener("click", function(e) {this.changeTab("rough-roads-deck")}.bind(this));
 		document.getElementById("title-page").addEventListener("click", function(e) {
 			document.getElementById("title-page").style.opacity = 0;
 			window.setTimeout(function() {document.getElementById("title-page").remove(); app.updateRondell();}, 1000);
@@ -346,7 +347,7 @@ let app = {
 			let cardDiv = document.querySelector("#card-" + card);
 			if (!cardDiv) {
 				cardDiv = this.createCard(card);
-				document.getElementById("card-area").appendChild(cardDiv);
+				document.getElementById("rough-roads-deck").appendChild(cardDiv);
 			}
 			if (i == 0) {
 				cardDiv.style.left = "50%";
@@ -479,7 +480,7 @@ let app = {
 		cardDiv.classList.add("flipped");
 		cardDiv.style.top = "10%";
 		cardDiv.style.left = "10%";
-		document.getElementById("card-area").appendChild(cardDiv);
+		document.getElementById("rough-roads-deck").appendChild(cardDiv);
 		window.setTimeout(function(thisArg) {
 			cardDiv.style.transform = "translate(-50%, -50%)";
 			cardDiv.style.opacity = "1";
@@ -537,7 +538,11 @@ let app = {
       document.getElementById("scenario-picker").classList.add("active");
       document.getElementById("help-wrap").classList.remove("visible");
     }
-    document.querySelectorAll("#card-area, #scenario-picker-area").forEach(function(e) {
+    if (tab == "rough-roads-deck") {
+      document.getElementById("scenario-picker").classList.remove("active");
+      document.getElementById("help-wrap").classList.remove("visible");
+    }
+    document.querySelectorAll("#rough-roads-deck, #scenario-picker-area").forEach(function(e) {
       e.classList.remove("active");
     });
     document.getElementById(tab).classList.add("active");
@@ -554,7 +559,7 @@ let app = {
 		cardDiv.classList.add("flipped");
 		cardDiv.style.top = "90%";
 		cardDiv.style.left = "10%";
-		document.getElementById("card-area").appendChild(cardDiv);
+		document.getElementById("rough-roads-deck").appendChild(cardDiv);
 		window.setTimeout(function(thisArg) {
 			cardDiv.style.transform = "translate(-50%, -50%)";
 			cardDiv.style.opacity = "1";
@@ -587,7 +592,7 @@ let app = {
 		card.style.pointerEvents = "none";
 		card.classList.add("flipped");
 		let discard = document.getElementById("discard-number");
-		document.getElementById("card-area").appendChild(card);
+		document.getElementById("rough-roads-deck").appendChild(card);
 		card.style.top = "80%";
 		card.style.transform = "scale(0.2)";
 		card.style.transformOrigin = "top left";

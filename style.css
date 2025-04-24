@@ -98,6 +98,11 @@ div#title-bottom {
   position: relative;
   background-size: 100% 100%;
 	overflow: hidden;
+  text-align: center;
+  font-size: 400%;
+  font-family: orgovan-rounded-web, sans-serif;
+  display: flex;
+  align-items: center;
 }
 
 #top-bar #scenario-picker-logo {
@@ -107,20 +112,14 @@ div#title-bottom {
 }
 
 #top-bar #logo {
-    top: 50%;
-    left: 50%;
-    position: absolute;
-    width: 100%;
-    transform: translate(-50%, -50%);
     /* background-image: url(images/logo-en.png); */
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
-    text-align: center;
-    font-size: 400%;
-    font-family: orgovan-rounded-web, sans-serif;
+    display: inline-block;
+    flex-grow: 3;
+
 	color: #221A42;
-  pointer-events: none;
 }
 
 #lang-select-wrap#lang-select-wrap {
@@ -159,9 +158,8 @@ div#title-bottom {
 #lang-select {
     height: 60%;
     right: 10%;
-    transform: translate(0, 35%);
-    position: absolute;
     z-index: 500;
+    display: inline-block;
 }
 .lang-select.de {
   background-image: url(images/flag-de.png);
@@ -570,13 +568,9 @@ button.hidden {
 }
 
 button#help-button {
-    position: absolute;
     padding: 7px 23px;
     /* background: #6262d3; */
     z-index: 201;
-    top: 50%;
-    transform: translate(0, -50%);
-    right: 1%;
     margin: auto auto;
     font-size: 4em;
     background-image: url(images/i-button.png);
@@ -587,6 +581,7 @@ button#help-button {
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
+    position: relative;
 }
 
 button.i-button {
