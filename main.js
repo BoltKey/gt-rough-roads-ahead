@@ -115,6 +115,11 @@ let app = {
 
 		});
 		document.getElementById("help-wrap").addEventListener("click", function(e) {document.getElementById("help-wrap").classList.remove("visible")} );
+		document.getElementById("scenario-submit").addEventListener("click", this.scenarioPickerSubmit );
+		document.getElementById("scneario-picker-back").addEventListener("click", (e) => {
+      document.getElementById("scenario-display").style.display = "none";
+      document.getElementById("scenario-form").style.display = "block";
+    } );
 
 		document.getElementById("lang-select").classList.add("lang-select", this.lang);
     for (var e of document.querySelectorAll("#lang-select-wrap .lang-select")) {
@@ -128,6 +133,14 @@ let app = {
 		this.resizeWindow();
 		this.updateRondell();
 	},
+
+  scenarioPickerSubmit: function(evt) {
+    evt.preventDefault();
+    let form = evt.target.closest("form");
+    console.log("form", form);
+    form.style.display = "none";
+    document.getElementById("scenario-display").style.display = "block";
+  },
 
   updateButtonStrings: function() {
     document.getElementById("discard-all-button").innerHTML = strings.Texts.button_discard["string_" + this.lang];

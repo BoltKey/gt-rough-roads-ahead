@@ -149,11 +149,24 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       </div>
       <br>
       <label for="Length" class="localizable" data-id="vips">Mission length?</label>
-      <label for="vips-yes" class="radio-label" class="localizable"  data-id="yes">Short</label>
+      <label for="length-short" class="radio-label" class="localizable"  data-id="yes">Short</label>
       <input type="checkbox" name="length-short" id="length-short" value="Short" checked>
-      <label for="vips-no" class="radio-label" class="localizable"  data-id="no">Medium</label>
+      <label for="length-medium" class="radio-label" class="localizable"  data-id="no">Medium</label>
       <input type="checkbox" name="length-medium" id="length-medium" value="Medium" checked>
-      <label for="vips-dontcare" class="radio-label" class="localizable"  data-id="dontcare">Long</label>
+      <label for="length-long" class="radio-label" class="localizable"  data-id="dontcare">Long</label>
       <input type="checkbox" name="length-long" id="length-long" value="Long" checked>
+      <br>
+      <input type="submit" id="scenario-submit" class="localizable" data-id="submit" value="Go!">
+    </form>
+    <div id="scenario-display">
+      <div id="scenario-display-title" class="localizable" data-id="scenario_display_title">[Contract name]</div>
+      <div id="scenario-display-image">[Contract image]</div>
+      <div id="scenario-display-text">[Contract text]</div>
+      <div id="scenario-display-mission-image">[Mission image]</div>
+      <div id="scenario-display-mission-text">[Mission text]</div>
+      <div id="scenario-display-ship">[Ship number]</div>
+      <div id="scenario-display-vip">[VIPs]</div>
+      <button id="scneario-picker-back" class="localizable" data-id="back">Change preferences</button>
+    </div>
   </div>
 </body>
