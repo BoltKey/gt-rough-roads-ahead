@@ -43,7 +43,7 @@ element {
     transition: opacity 1s;
     opacity: 1;
     position: absolute;
-    z-index: 500;
+    z-index: 700;
     overflow: hidden;
 }
 #title-page button {
@@ -97,29 +97,42 @@ div#title-bottom {
   /* border-bottom: solid #b18a76ba 5px; */
   position: relative;
   background-size: 100% 100%;
-	overflow: hidden;
   text-align: center;
-  font-size: 400%;
+  font-size: 300%;
   font-family: orgovan-rounded-web, sans-serif;
   display: flex;
   align-items: center;
+}
+
+#top-bar > * {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 600;
+}
+
+.navigator-tab:not(.active){
+  filter: grayscale(0.4);
+  opacity: 0.8;
 }
 
 #top-bar #scenario-picker-logo {
   width: 20%;
   background-color: aqua;
   height: 100%;
+  flex-grow: 2;
 }
 
-#top-bar #logo {
+#top-bar #rr-logo {
     /* background-image: url(images/logo-en.png); */
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
-    display: inline-block;
-    flex-grow: 3;
-
+    flex-grow: 2;
+  height: 100%;
 	color: #221A42;
+  background-color: #f1e530;
+
 }
 
 #lang-select-wrap#lang-select-wrap {
@@ -140,7 +153,7 @@ div#title-bottom {
 }
 #lang-select-wrap#lang-select-wrap.visible {
   transform: translate(0%, 0);
-  z-index: 600;
+  z-index: 650;
   right: 5%;
 }
 
@@ -183,7 +196,7 @@ div#title-bottom {
   background-image: url(images/flag-ru.png);
 }
 
-.landscape #top-bar #logo {
+.landscape #top-bar #rr-logo {
 	font-size: 300%;
 }
 
@@ -259,6 +272,9 @@ div#draw-number.no-cards {
 .tab.active {
   left: 0%;
 }
+.navigator-tab.active {
+  transform: scale(1, 1.1);
+}
 
 #scenario-picker {
     background: magenta;
@@ -268,13 +284,15 @@ div#draw-number.no-cards {
     z-index: 600;
     overflow: hidden;
     transition: opacity 1s, left 1s;
+    height: 90%;
+    overflow: auto;
 }
 
 .card-wrap {
 	filter: drop-shadow(2px 4px 6px black);
 	-webkit-transform-style: preserve-3d;
 
-	transition: transform 1s, opacity .5s, left 1s, top 1s, filter .3s;
+	transition: transform 0.4s, opacity .5s, left 0.4s, top 0.4s, filter .3s;
 	position: absolute;
 }
 
@@ -636,6 +654,46 @@ span.i-icon {
     padding: 15% 10%;
     font-size: 300%;
     font-family: 'orgovan-rounded-web';
+}
+
+
+#expansion-picker-wrap, #ship-picker-wrap {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+
+#expansion-picker-wrap > label {
+  width: 20%;
+}
+
+.exp-pick-image, .ship-pick-image {
+  filter: grayscale(1);
+  transition: filter .1s;
+  width: 100%;
+}
+.ship-pick-image {
+  opacity: 0.5;
+}
+.ship-pick-image {
+  width: 50%;
+}
+:is(.exp-pick-image, .ship-pick-image).picked {
+  filter: grayscale(0);
+  opacity: 1;
+}
+
+#scenario-picker * {
+  font-family: catseye, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 83px;
+}
+
+#scenario-picker input[type='radio'] {
+  width: 80px;
+  height: 80px;
 }
 
 @media (max-width: 1000px) and (orientation: landscape) {

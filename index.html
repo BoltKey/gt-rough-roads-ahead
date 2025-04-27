@@ -71,8 +71,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <div class='lang-select ru' data-lang="ru"></div>
   </div>
 	<div id='top-bar'>
-    <div id="scenario-picker-logo" class="navigator-tab">Scenario Picker</div>
-		<div id='logo' class="navigator-tab"> Rough Roads
+    <div id="scenario-picker-logo" class="navigator-tab localizable" data-id="scenario_picker_name">Scenario Picker</div>
+		<div id='rr-logo' class="navigator-tab active"> Rough Roads
 		</div>
     <div id='lang-select'></div>
 		<!--<a href="https://cge.as/" id='cge-logo' target=”_blank”>-->
@@ -96,5 +96,64 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		</div>
 		<div class='card-back' style='display: none'></div>
 	</div>
-  <div id="scenario-picker" class="tab"></div>
+  <div id="scenario-picker" class="tab">
+    <form id="scenario-form">
+      <div id="scenario-picker-title" class="localizable" data-id="scenario_picker_title">Contract Picker</div>
+      <label for="have-GT2" class="localizable"  data-id="have_expansion">Tap expansions that you have</label>
+      <div id="expansion-picker-wrap">
+        <label for="have-GT2">
+          <img id="have-GT2-img" class="exp-pick-image" src="images/box-images/GT2box.png">
+        </label>
+        <input type="checkbox" id="have-GT2" style="display: none;">
+        <label for="have-GT3">
+          <img id="have-GT3-img" class="exp-pick-image" src="images/box-images/GT3box.png">
+        </label>
+        <input type="checkbox" id="have-GT3" style="display: none;">
+      </div>
+      <label for="turn-based" class="localizable" data-id="turn-based">Turn based?</label>
+      <input type="radio" name="turn-based" id="turn-based-yes" value="yes">
+      <label for="turn-based-yes" class="radio-label" class="localizable"  data-id="yes">Yes</label>
+      <input type="radio" name="turn-based" id="turn-based-no" value="no">
+      <label for="turn-based-no" class="radio-label" class="localizable"  data-id="no">No</label>
+      <input type="radio" name="turn-based" id="turn-based-dontcare" value="dontcare" checked>
+      <label for="turn-based-dontcare" class="radio-label" class="localizable"  data-id="dontcare">Don't care</label>
+      <br>
+      <label for="vips" class="localizable" data-id="vips">Play with VIPs?</label>
+      <input type="radio" name="vips" id="vips-yes" value="yes">
+      <label for="vips-yes" class="radio-label" class="localizable"  data-id="yes">Yes</label>
+      <input type="radio" name="vips" id="vips-no" value="no">
+      <label for="vips-no" class="radio-label" class="localizable"  data-id="no">No</label>
+      <input type="radio" name="vips" id="vips-dontcare" value="dontcare" checked>
+      <label for="vips-dontcare" class="radio-label" class="localizable"  data-id="dontcare">Don't care</label>
+      <div id="ship-picker-wrap">
+        <label for="ship-picker" class="localizable" data-id="ship_picker">Ship Picker</label>
+        <input type="checkbox" id="ship-1" checked style="display: none;">
+        <label for="ship-1" class="radio-label" class="localizable"  data-id="ship_1">
+          <img id="ship-1-img" class="ship-pick-image picked" src="images/ship-icons/ship1.png">
+        </label>
+
+        <input type="checkbox" id="ship-2" checked style="display: none;">
+        <label for="ship-2" class="radio-label" class="localizable"  data-id="ship_2">
+          <img id="ship-2-img" class="ship-pick-image picked" src="images/ship-icons/ship2.png">
+        </label>
+
+        <input type="checkbox" id="ship-3" checked style="display: none;">
+        <label for="ship-3" class="radio-label" class="localizable"  data-id="ship_3">
+          <img id="ship-3-img" class="ship-pick-image picked" src="images/ship-icons/ship3.png">
+        </label>
+
+        <input type="checkbox" id="ship-3a" checked style="display: none;">
+        <label for="ship-3a" class="radio-label" class="localizable"  data-id="ship_3a">
+          <img id="ship-3a-img" class="ship-pick-image picked" src="images/ship-icons/ship3a.png">
+        </label>
+      </div>
+      <br>
+      <label for="Length" class="localizable" data-id="vips">Mission length?</label>
+      <label for="vips-yes" class="radio-label" class="localizable"  data-id="yes">Short</label>
+      <input type="checkbox" name="length-short" id="length-short" value="Short" checked>
+      <label for="vips-no" class="radio-label" class="localizable"  data-id="no">Medium</label>
+      <input type="checkbox" name="length-medium" id="length-medium" value="Medium" checked>
+      <label for="vips-dontcare" class="radio-label" class="localizable"  data-id="dontcare">Long</label>
+      <input type="checkbox" name="length-long" id="length-long" value="Long" checked>
+  </div>
 </body>

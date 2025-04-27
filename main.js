@@ -83,6 +83,22 @@ let app = {
 		}
 		this.updateButtonStrings();
 
+    for (let expName of ["GT2", "GT3"]) {
+      let checkbox = document.getElementById('have-' + expName);
+      let image = document.getElementById('have-' + expName + '-img');
+
+      checkbox?.addEventListener('change', () => {
+        image.classList.toggle('picked', checkbox.checked);
+      });
+    }
+    for (let shipName of ["1", "2", "3", "3a"]) {
+      let checkbox = document.getElementById('ship-' + shipName);
+      let image = document.getElementById('ship-' + shipName + '-img');
+
+      checkbox?.addEventListener('change', () => {
+        image.classList.toggle('picked', checkbox.checked);
+      });
+    }
 
 		document.getElementById("draw-button").addEventListener("click", function(e) {this.drawCard()}.bind(this), this);
 		document.getElementById("draw-number").addEventListener("click", function(e) {this.drawCard()}.bind(this), this);
@@ -92,7 +108,7 @@ let app = {
 		document.getElementById("help-button").addEventListener("click", function(e) {this.helpClick()}.bind(this));
 		document.getElementById("discard-number").addEventListener("click", function(e) {this.discardDeckClick()}.bind(this));
 		document.getElementById("scenario-picker-logo").addEventListener("click", function(e) {this.changeTab("scenario-picker")}.bind(this));
-		document.getElementById("logo").addEventListener("click", function(e) {this.changeTab("rough-roads-deck")}.bind(this));
+		document.getElementById("rr-logo").addEventListener("click", function(e) {this.changeTab("rough-roads-deck")}.bind(this));
 		document.getElementById("title-page").addEventListener("click", function(e) {
 			document.getElementById("title-page").style.opacity = 0;
 			window.setTimeout(function() {document.getElementById("title-page").remove(); app.updateRondell();}, 1000);
@@ -120,7 +136,13 @@ let app = {
       document.getElementById("loading-button").innerHTML = strings.Texts.button_title["string_" + this.lang];
     }
 
-    document.getElementById("logo").innerHTML = strings.Texts.game_name["string_" + this.lang];
+    document.getElementById("rr-logo").innerHTML = strings.Texts.game_name["string_" + this.lang];
+    for (var e of document.querySelectorAll(".localizable")) {
+      let id = e.dataset.id;
+      if (id && strings.Texts[id]?.["string_" + this.lang]) {
+        e.innerHTML = strings.Texts[id]["string_" + this.lang];
+      }
+    }
   },
 
   selectLangClick: function() {
@@ -534,17 +556,19 @@ let app = {
 		this.saveState();
 	},
   changeTab: function(tab) {
+    document.querySelectorAll("#rough-roads-deck, #scenario-picker-area, .navigator-tab").forEach(function(e) {
+      e.classList.remove("active");
+    });
     if (tab == "scenario-picker") {
       document.getElementById("scenario-picker").classList.add("active");
+      document.getElementById("scenario-picker-logo").classList.add("active");
       document.getElementById("help-wrap").classList.remove("visible");
     }
     if (tab == "rough-roads-deck") {
       document.getElementById("scenario-picker").classList.remove("active");
+      document.getElementById("rr-logo").classList.add("active");
       document.getElementById("help-wrap").classList.remove("visible");
     }
-    document.querySelectorAll("#rough-roads-deck, #scenario-picker-area").forEach(function(e) {
-      e.classList.remove("active");
-    });
     document.getElementById(tab).classList.add("active");
   },
 	discardDeckClick: function(evt) {
