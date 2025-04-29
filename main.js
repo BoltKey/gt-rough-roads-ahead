@@ -5,6 +5,7 @@
 const CARD_MINUTES_DELAY = 3;
 const CARD_EVENT_DELAY = CARD_MINUTES_DELAY * 60 * 1000;
 
+
 window.googleDocCallback = function () { return true; };
 
 let app = {
@@ -140,6 +141,41 @@ let app = {
     console.log("form", form);
     form.style.display = "none";
     document.getElementById("scenario-display").style.display = "block";
+    let contract = app.getContract(new FormData(form));
+    document.getElementById("scenario-display-title").innerHTML = contract.name;
+    document.getElementById("scenario-display-text").innerHTML = contract.description;
+    document.getElementById("scenario-display-image").style.backgroundImage = "url(" + contract.image + ")";
+    document.getElementById("scenario-display-ship").setAttribute("src", "images/ship-icons/ship" + contract.shipNumber + ".png");
+    document.getElementById("scenario-display-mission").innerHTML = app.createMissionDisplay(contract.missionsNumber).outerHTML;
+  },
+
+  createMissionDisplay: (missionNumber) => {
+    let result = document.createElement("div");
+    result.classList.add("mission-display");
+    let missionText = missionTexts[missionNumber];
+    if (!missionText) {
+      return result;
+    }
+    result.innerHTML = "<h2>" + missionText?.title + "</h2><div class='mission-text'>" + missionText?.text + "</div>";
+    let image = document.createElement("div");
+    image.classList.add("mission-image");
+    image.style.backgroundImage = "url(images/cards/" + missionNumber + ".jpg)";
+    result.appendChild(image);
+    return result;
+  },
+
+  getContract: (options) => {
+    // TODO: fetch from data
+
+    return {
+      name: "Testing contract",
+      description: "This is instructions for the contract",
+      options: options,
+      image: "images/cards/contract.jpg",
+      missionsNumber: "1",
+      shipNumber: "3a",
+      vips: true
+    };
   },
 
   updateButtonStrings: function() {

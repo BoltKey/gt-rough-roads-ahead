@@ -705,6 +705,12 @@ span.i-icon {
   display: none;
 }
 
+#scenario-display-ship {
+  width: 20%;
+  aspect-ratio: 1;
+  margin: auto;
+}
+
 @media (max-width: 1000px) and (orientation: landscape) {
 	#turn-portrait {
 		display: block;
