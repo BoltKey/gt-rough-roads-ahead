@@ -279,14 +279,6 @@ div#draw-number.no-cards {
   transform: scale(1, 1.1);
 }
 
-#scenario-picker {
-    width: 100%;
-    height: 100%;
-    z-index: 600;
-    overflow: hidden;
-    height: 90%;
-    overflow: auto;
-}
 
 .card-wrap {
 	filter: drop-shadow(2px 4px 6px black);
@@ -413,7 +405,7 @@ li .ship-icon {
 	transform: rotateY(180deg);
 }
 
-button, input[type='submit'] {
+button, input[type='submit'], input[type='button'] {
     position: absolute;
     font-size: 30px;
     padding: 17px;
@@ -657,16 +649,6 @@ span.i-icon {
 }
 
 
-#expansion-picker-wrap, #ship-picker-wrap {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 100%;
-}
-
-#expansion-picker-wrap > label {
-  width: 20%;
-}
 
 .exp-pick-image, .ship-pick-image {
   filter: grayscale(1);
@@ -684,32 +666,6 @@ span.i-icon {
   opacity: 1;
 }
 
-#scenario-picker * {
-  font-family: catseye, sans-serif;
-  font-weight: 700;
-  font-style: normal;
-  font-size: 83px;
-  color: white;
-}
-
-#scenario-picker input[type='radio'] {
-  width: 80px;
-  height: 80px;
-}
-#scenario-picker input[type='checkbox'] {
-  width: 80px;
-  height: 80px;
-}
-
-#scenario-display {
-  display: none;
-}
-
-#scenario-display-ship {
-  width: 20%;
-  aspect-ratio: 1;
-  margin: auto;
-}
 
 @media (max-width: 1000px) and (orientation: landscape) {
 	#turn-portrait {

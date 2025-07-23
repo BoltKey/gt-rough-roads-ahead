@@ -112,7 +112,7 @@ let app = {
 		document.getElementById("rr-logo").addEventListener("click", function(e) {this.changeTab("rough-roads-deck")}.bind(this));
 		document.getElementById("title-page").addEventListener("click", function(e) {
 			document.getElementById("title-page").style.opacity = 0;
-			window.setTimeout(function() {document.getElementById("title-page").remove(); app.updateRondell();}, 1000);
+			window.setTimeout(function() {document.getElementById("title-page").remove(); app.updateRondell();}, /*100*/0);
 
 		});
 		document.getElementById("help-wrap").addEventListener("click", function(e) {document.getElementById("help-wrap").classList.remove("visible")} );
@@ -699,7 +699,7 @@ let app = {
 		this.updateRondell();
 	}
 }
-window.onload = function() {app.main()};
+window.addEventListener("load", function() {app.main()});
 
 
 /*function handleClientLoad() {

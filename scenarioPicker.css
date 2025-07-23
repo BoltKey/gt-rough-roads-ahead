@@ -1,0 +1,136 @@
+#scenario-picker {
+    width: 90%;
+    height: 100%;
+    z-index: 600;
+    overflow: hidden;
+    height: 90%;
+    overflow: auto;
+    padding: 10px 5%;
+    margin-bottom: 15px;
+}
+#scenario-picker * {
+  font-family: hpSimplified, Arial;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 60px;
+  color: white;
+}
+#scenario-picker .hidden {
+  display: none;
+}
+
+#scenario-picker-welcome {
+  font-size: 50px;
+}
+
+#scenario-picker :is(.instructions, select) {
+  font-size: 50px;
+  font-family: hpSimplified, Arial;
+}
+
+#scenario-picker option {
+  font-size: 30px;
+}
+
+#scenario-picker input[type='radio'] {
+  width: 80px;
+  height: 80px;
+}
+#scenario-picker input[type='checkbox'] {
+  width: 80px;
+  height: 80px;
+}
+
+#scenario-display {
+  display: none;
+}
+
+#scenario-display-ship {
+  width: 20%;
+  aspect-ratio: 1;
+  margin: auto;
+}
+
+
+#expansion-picker-wrap img {
+  width: 20%;
+}
+.have-expansion {
+  width: 80%;
+}
+
+.exp-pick-image-wrap label {
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  display: flex;
+}
+.exp-pick-image-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.exp-pick-wrap {
+  margin-bottom: 20px;
+}
+
+.double-range-wrap {
+  position: relative;
+  height: 120px;
+}
+.double-range-wrap input {
+  position: absolute;
+  height: 30px;
+  top: 20px;
+}
+
+.double-range {
+  pointer-events: none;
+}
+
+.double-range::-webkit-slider-thumb, .double-range::-moz-range-thumb {
+  width: 100px;
+  height: 100px;
+  background: #fff;
+  border-radius: 50%;
+  border: 2px solid #000;
+  pointer-events: all;
+  z-index: 1000;
+}
+
+.double-range-max {
+  transform: translate(100px, 0);
+}
+
+#scenario-picker button, input[type='button'], input[type='submit'] {
+  position: relative;
+}
+
+.details {
+
+}
+
+#scenario-picker .picker-screen {
+  font-family: hpSimplified, Arial;
+}
+
+#scenario-picker .i-button{
+  width: 60px;
+  height: 60px;
+  background-image: url(images/info.png);
+  cursor: pointer;
+}
+
+.popup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+}
+
+.popup :is(input, select) {
+  background-color: rgba(0, 0, 0, 0.8);
+}
