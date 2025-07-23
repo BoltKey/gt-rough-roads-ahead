@@ -23,7 +23,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <script type="text/javascript" src='libs/nosleep.js' async></script>
 <script type="text/javascript" src='main.js' async></script>
-<script type="text/javascript" src='scenarioPicker.js'></script>
+<script type="module" src='scenarioPicker.js'></script>
 <script type="text/javascript" src='strings.js' async></script>
 <script type="text/javascript" src='missionData/missionTexts.js' async></script>
 
@@ -124,8 +124,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             </label>
           </div>
           <div id="gt-options" style="display: none; margin-left: 32px;">
-            <input type="checkbox" id="gt-option-1">
-            <label for="gt-option-1"><span>Include the base ships</span></label><br>
+            <input type="checkbox" id="gt-option-ships" checked>
+            <label for="gt-option-ships"><span>Include the base ships</span></label><br>
           </div>
         </div>
         <div class="exp-pick-wrap">
@@ -137,17 +137,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             </label>
           </div>
           <div id="gt2-options" style="display: none; margin-left: 32px;">
-            <input type="checkbox" id="gt2-option-1">
-            <label for="gt2-option-1"><span>Include the new ships.</span></label>
+            <input type="checkbox" id="gt2-option-ships">
+            <label for="gt2-option-ships"><span>Include the new ships.</span></label>
             <br>
-            <input type="checkbox" id="gt2-option-2">
-            <label for="gt2-option-2"><span>Include the new tiles.</span></label>
+            <input type="checkbox" id="gt2-option-tiles">
+            <label for="gt2-option-tiles"><span>Include the new tiles.</span></label>
             <br>
-            <input type="checkbox" id="gt2-option-3">
-            <label for="gt2-option-3"><span>Include the new adventure cards.</span></label>
+            <input type="checkbox" id="gt2-option-adventure-cards">
+            <label for="gt2-option-adventure-cards"><span>Include the new adventure cards.</span></label>
             <br>
-            <input type="checkbox" id="gt2-option-4">
-            <label for="gt2-option-4"><span>Include the Rough Roads physical cards.</span></label>
+            <input type="checkbox" id="gt2-option-rr">
+            <label for="gt2-option-rr"><span>Include the Rough Roads physical cards.</span></label>
           </div>
         </div>
         <div class="exp-pick-wrap">
@@ -160,16 +160,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           </div>
         </div>
         <div id="gt3-options" style="display: none; margin-left: 32px;">
-          <input type="checkbox" id="gt3-option-1">
-          <label for="gt3-option-1"><span>Include the missions.</span></label>
+          <input type="checkbox" id="gt2-option-missions" checked>
+          <label for="gt2-option-missions"><span>Include the missions.</span></label>
           <br>
-          <input type="checkbox" id="gt3-option-2">
-          <label for="gt3-option-2"><span>Include the VIPs.</span></label>
+          <input type="checkbox" id="gt2-option-vip">
+          <label for="gt2-option-vip"><span>Include the VIPs.</span></label>
         </div>
         <div class="exp-pick-image-wrap">
-          <input type="checkbox" id="include-rr">
-          <label for="include-rr">
-            <span data-id="include-rr" class="have-expansion">Include the web version of Rough Roads.</span>
+          <input type="checkbox" id="digital-rr">
+          <label for="include-digital-rr">
+            <span data-id="include-digital-rr" class="have-expansion">Include the web version of Rough Roads.</span>
             <img id="include-rr-img" class="exp-pick-image" src="images/box-images/RRbox.png">
           </label>
         </div>
@@ -179,16 +179,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     </form>
     <form data-id="game-mode-form" class="picker-screen picker-screen-3">
       <div class="localizable instructions" data-id="game_mode_instructions">Perfect. So, what do you feel like playing now?</div>
-      <input type="checkbox" name="flight-level" id="level-1" value="1" checked>
+      <input type="checkbox" name="flight-level" id="level-1"  checked>
       <label for="level-1" class="radio-label localizable" data-id="level_1">Level 1 Flight</label>
       <br>
-      <input type="checkbox" name="flight-level" id="level-2" value="2">
+      <input type="checkbox" name="flight-level" id="level-2" >
       <label for="level-2" class="radio-label localizable" data-id="level_2">Level 2 Flight</label>
       <br>
-      <input type="checkbox" name="flight-level" id="level-3" value="3">
+      <input type="checkbox" name="flight-level" id="level-3" >
       <label for="level-3" class="radio-label localizable" data-id="level_3">Level 3 Flight</label>
       <br>
-      <input type="checkbox" name="flight-level" id="level-trek" value="trek">
+      <input type="checkbox" name="flight-level" id="level-trek">
       <label for="level-trek" class="radio-label localizable" data-id="level_trek">Transgalactic Trek (all three flights)</label>
       <br>
 
@@ -257,7 +257,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       </div>
       <div class="contract-ship">
         <span data-id="contract_mission">Use ship</span>
-        <span id="ship-icon">[ship icon]</span>
+        <span class="ship-icon-selected">[ship icon]</span>
         <div class="i-button" data-tab="ship"></div>
         <div class="popup popup-ship hidden">
           <h2 class="popup-title">Ship</h2>
@@ -283,7 +283,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         </div>
       </div>
       <div class="contract-vips">
-        <span data-id="contract_mission">[don't] play VIPs</span>
+        <span class="vip-status">[don't] play VIPs</span>
         <div class="i-button" data-tab="vips"></div>
         <div class="popup popup-vips hidden">
           <h2 class="popup-title">VIPs (Do What?! expansion)</h2>
@@ -299,7 +299,7 @@ If a cabin fulfills condition on a VIP card, you may put the corresponding VIP f
         </div>
       </div>
       <div class="contract-rr">
-        <span data-id="contract_mission">Use [n] Rough Roads cards</span>
+        <span data-id="contract_mission">Use <span class="rr-amount">[n]</span> Rough Roads cards</span>
         <div class="i-button" data-tab="rr"></div>
         <div class="popup popup-rr hidden">
           <h2 class="popup-title">Rough Roads</h2>
@@ -311,7 +311,6 @@ If a cabin fulfills condition on a VIP card, you may put the corresponding VIP f
             <label for="num-rr">Rough Roads cards.</label><br>
             <input type="checkbox" id="digital-rr" checked>
             <label for="digital-rr">Use digital Rough Roads</label>
-            <label for="use-rr">Use Rough Roads</label>
             <button class="close-popup">Ok</button>
           </div>
         </div>

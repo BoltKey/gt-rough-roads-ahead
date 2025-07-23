@@ -23,12 +23,12 @@ let app = {
 
 		document.getElementById("loading").remove();
 		document.getElementById("loading-button").style.display = '';
-		try {
+		/*try {
 			screen.orientation.lock('landscape');
 		}
 		catch {
 			// sorry
-		}
+		}*/
 		this.noSleep = new NoSleep();
     if (localStorage.getItem("language")) {
       this.lang = localStorage.getItem("language");
@@ -116,11 +116,7 @@ let app = {
 
 		});
 		document.getElementById("help-wrap").addEventListener("click", function(e) {document.getElementById("help-wrap").classList.remove("visible")} );
-		document.getElementById("scenario-submit").addEventListener("click", this.scenarioPickerSubmit );
-		document.getElementById("scneario-picker-back").addEventListener("click", (e) => {
-      document.getElementById("scenario-display").style.display = "none";
-      document.getElementById("scenario-form").style.display = "block";
-    } );
+
 
 		document.getElementById("lang-select").classList.add("lang-select", this.lang);
     for (var e of document.querySelectorAll("#lang-select-wrap .lang-select")) {
@@ -128,26 +124,13 @@ let app = {
     }
 
 		window.addEventListener('resize', function(e) {this.resizeWindow()}.bind(this));
-		window.addEventListener('deviceorientation', function(e) {this.resizeWindow()}.bind(this));
+		//window.addEventListener('deviceorientation', function(e) {this.resizeWindow()}.bind(this));
 
     this.changeLang(this.lang)
 		this.resizeWindow();
 		this.updateRondell();
 	},
 
-  scenarioPickerSubmit: function(evt) {
-    evt.preventDefault();
-    let form = evt.target.closest("form");
-    console.log("form", form);
-    form.style.display = "none";
-    document.getElementById("scenario-display").style.display = "block";
-    let contract = app.getContract(new FormData(form));
-    document.getElementById("scenario-display-title").innerHTML = contract.name;
-    document.getElementById("scenario-display-text").innerHTML = contract.description;
-    document.getElementById("scenario-display-image").style.backgroundImage = "url(" + contract.image + ")";
-    document.getElementById("scenario-display-ship").setAttribute("src", "images/ship-icons/ship" + contract.shipNumber + ".png");
-    document.getElementById("scenario-display-mission").innerHTML = app.createMissionDisplay(contract.missionsNumber).outerHTML;
-  },
 
   createMissionDisplay: (missionNumber) => {
     let result = document.createElement("div");
@@ -162,20 +145,6 @@ let app = {
     image.style.backgroundImage = "url(images/cards/" + missionNumber + ".jpg)";
     result.appendChild(image);
     return result;
-  },
-
-  getContract: (options) => {
-    // TODO: fetch from data
-
-    return {
-      name: "Testing contract",
-      description: "This is instructions for the contract",
-      options: options,
-      image: "images/cards/contract.jpg",
-      missionsNumber: "1",
-      shipNumber: "3a",
-      vips: true
-    };
   },
 
   updateButtonStrings: function() {
