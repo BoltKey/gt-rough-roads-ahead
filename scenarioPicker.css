@@ -16,7 +16,7 @@
   color: white;
 }
 #scenario-picker .hidden {
-  display: none;
+  display: none !important;
 }
 
 #scenario-picker-welcome {
@@ -126,11 +126,82 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
   background-color: rgba(0, 0, 0, 0.8);
   z-index: 1000;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .popup :is(input, select) {
   background-color: rgba(0, 0, 0, 0.8);
+}
+
+.rating-button:not(.selected) {
+  filter: grayscale();
+}
+
+#scenario-picker .picker-screen-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
+  color: white;
+  height: 100%;
+  width: 100%;
+}
+
+.loading-spinner {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 0.5s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.contract-ship {
+  display: flex;
+  align-items: center;
+  font-size: 50px;
+  margin-bottom: 20px;
+}
+
+.ship-icon-selected {
+  width: 240px;
+  aspect-ratio: 1;
+  background-size: contain;
+  display: inline-block;
+}
+
+.ship-big-image {
+  width: 100%;
+  aspect-ratio: 1;
+  background-size: contain;
+  display: inline-block;
+}
+
+:is(.ship-icon-selected, .ship-big-image)[data-ship="shipI"] {
+  background-image: url(images/ship-icons/ship_icon1.webp);
+}
+
+:is(.ship-icon-selected, .ship-big-image)[data-ship="shipII"] {
+  background-image: url(images/ship-icons/ship_icon2.webp);
+}
+
+:is(.ship-icon-selected, .ship-big-image)[data-ship="shipIII"] {
+  background-image: url(images/ship-icons/ship_icon3.webp);
+}
+:is(.ship-icon-selected, .ship-big-image)[data-ship="shipIA"] {
+  background-image: url(images/ship-icons/ship_icon1a.webp);
+}
+:is(.ship-icon-selected, .ship-big-image)[data-ship="shipIIA"] {
+  background-image: url(images/ship-icons/ship_icon2a.webp);
+}
+:is(.ship-icon-selected, .ship-big-image)[data-ship="shipIIIA"] {
+  background-image: url(images/ship-icons/ship_icon3a.webp);
 }

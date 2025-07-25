@@ -160,7 +160,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           </div>
         </div>
         <div id="gt3-options" style="display: none; margin-left: 32px;">
-          <input type="checkbox" id="gt2-option-missions" checked>
+          <input type="checkbox" id="gt2-option-missions">
           <label for="gt2-option-missions"><span>Include the missions.</span></label>
           <br>
           <input type="checkbox" id="gt2-option-vip">
@@ -232,11 +232,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         setupDoubleRange('roughness-min', 'roughness-max', 'roughness-values');
       </script>
       <input type="button" name="continue" data-next="2" value="Previous Step" data-id="previous_step"></input>
-      <input type="button" name="continue" data-next="contract" value="Offer me a contract" data-id="continue"></input>
+      <input type="button" name="continue" data-next="loading" value="Offer me a contract" data-id="continue"></input>
     </form>
     <div class="picker-screen picker-screen-contract">
       <div class="contract-mission">
-        <span data-id="contract_mission">Play mission</span>
+        <span data-id="contract_mission">Play</span>
         <span class="mission-name">[mission name]</span>
         <div class="i-button" data-tab="mission"></div>
         <div class="popup popup-mission hidden">
@@ -247,35 +247,31 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <span class="mission-text">For the detailed rules, find the corresponding page in the mission book.</span>
           </div>
           <button>Change</button>
-          <select class="mission-select">
-            <option value="mission1">Mission 1</option>
-            <option value="mission2">Mission 2</option>
-            <option value="mission3">Mission 3</option>
+          <select name="mission" class="mission-select contract-change">
           </select>
           <button class="close-popup">Ok</button>
         </div>
       </div>
       <div class="contract-ship">
-        <span data-id="contract_mission">Use ship</span>
-        <span class="ship-icon-selected">[ship icon]</span>
+        <span data-id="contract_ship">Use this ship: </span>
+        <div class="ship-icon-selected"></div>
         <div class="i-button" data-tab="ship"></div>
         <div class="popup popup-ship hidden">
           <h2 class="popup-title">Ship</h2>
           <div class="popup-content">
-            <img src="images/ships/[ship image].png" alt="[ship image]">
+            <img class="ship-big-image" src="images/ships/[ship image].png">
             <div class="popup-text">
-              <span class="ship-name">[ship name]</span><br>
               <span class="ship-text">[ship description]</span>
             </div>
-            <select class="ship-select">
-              <option value="ship-I">Ship I</option>
-              <option value="ship-II">Ship II</option>
-              <option value="ship-III">Ship III</option>
+            <select name="ship" class="ship-select contract-change">
+              <option value="shipI">Ship I</option>
+              <option value="shipII">Ship II</option>
+              <option value="shipIII">Ship III</option>
               <!-- GT2 ship options, only shown when 'use-GT2' is checked -->
               <span id="gt2-ship-options" style="display: none;">
-                <option value="ship-IA">Ship IA (Keep on Trucking expansion)</option>
-                <option value="ship-IB">Ship IIA (Keep on Trucking expansion)</option>
-                <option value="ship-IC">Ship IIIA (Keep on Trucking expansion)</option>
+                <option value="shipIA">Ship IA (Keep on Trucking expansion)</option>
+                <option value="shipIIA">Ship IIA (Keep on Trucking expansion)</option>
+                <option value="shipIIIA">Ship IIIA (Keep on Trucking expansion)</option>
               </span>
             </select>
             <button class="close-popup">Ok</button>
@@ -292,14 +288,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <br>
 If a cabin fulfills condition on a VIP card, you may put the corresponding VIP figure to that cabin instead the standard two standard astronauts (each VIP max. once). Effects and rewards of that VIP apply.</span>
             <br>
-            <input type="checkbox" id="use-vips" checked>
+            <input type="checkbox" name="vip" class="use-vips contract-change" checked>
             <label for="use-vips">Use VIPs</label>
             <button class="close-popup">Ok</button>
           </div>
         </div>
       </div>
       <div class="contract-rr">
-        <span data-id="contract_mission">Use <span class="rr-amount">[n]</span> Rough Roads cards</span>
+        <span data-id="contract_rr">Use <span class="rr-amount">[n]</span> Rough Roads cards</span>
         <div class="i-button" data-tab="rr"></div>
         <div class="popup popup-rr hidden">
           <h2 class="popup-title">Rough Roads</h2>
@@ -307,9 +303,9 @@ If a cabin fulfills condition on a VIP card, you may put the corresponding VIP f
             <span class="rr-text">You will draw <span class="rr-amount">[n]</span> Rough Roads cards from the Rough Roads deck. You may reveal them at any time during the game, but only after you complete all other steps.</span>
             <br>
             <label for="num-rr">Use</label>
-            <input type="number" id="num-rr" name="num-rr" value="1" min="0" max="3"/>
+            <input type="number" class="num-rr contract-change" name="num-rr" value="1" min="0" max="3"/>
             <label for="num-rr">Rough Roads cards.</label><br>
-            <input type="checkbox" id="digital-rr" checked>
+            <input type="checkbox" name="digital-rr" class="digital-rr contract-change" checked>
             <label for="digital-rr">Use digital Rough Roads</label>
             <button class="close-popup">Ok</button>
           </div>
@@ -321,7 +317,7 @@ If a cabin fulfills condition on a VIP card, you may put the corresponding VIP f
       <button class="contract-navigation" data-next="3">
         Previous step
       </button>
-      <button class="contract-navigation" data-next="decline">
+      <button class="contract-navigation" data-next="loading">
         Decline
       </button>
       <button class="contract-navigation" data-next="launch">
@@ -329,16 +325,21 @@ If a cabin fulfills condition on a VIP card, you may put the corresponding VIP f
       </button>
     </div>
     <div class="picker-screen picker-screen-launch">
-      Find and read the <span class="mission-name">[mission name]</span>, so everyone understands it. <span class="variant-text">[variant text]</span>.<br>
-      Everyone takes the <span class="ship-icon">[ship icon]</span>. Make sure everyone understands the space bending.<br>
+      <div class='mission-instructions'>Find and read the <span class="mission-name">[mission name]</span>, so everyone understands it. <span class="variant-text">[variant text]</span>.<br>
+      </div>
+      Everyone takes the <div class="ship-icon-selected"></div>. Make sure everyone understands the space bending.<br>
       Everyone gets <span class="credits-amt">[credits]</span> credits (because you are playing a mission).<br>
       <span class="rainbow-cabin-text">[Everyone gets a rainbow cabin (because you are playing with VIPs). Reveal one VIP card of each color.]</span><br>
       <span class="rr-text">[Once you complete all other steps reveal <span class="rr-amount">[n]</span> Rough Roads cards in the Rough Roads tab.]</span><br>
       <br>
       Bon Voyage!
       <br>
-      <button class="contract-navigation" data-next="decline">Abandon Contract</button>
+      <button class="contract-navigation" data-next="3">Abandon Contract</button>
       <button class="contract-navigation" data-next="flight-done">Flight Done</button>
+    </div>
+    <div class="picker-screen picker-screen-loading">
+      Creating contract...
+      <div class="loading-spinner"></div>
     </div>
     <div class="picker-screen picker-screen-flight-done">
       <h2>Thank you for participating in our Contract program!</h2>
@@ -346,11 +347,11 @@ If a cabin fulfills condition on a VIP card, you may put the corresponding VIP f
         How did your group enjoy this particular contract? Please rate whether it was fun, not whether you made tons of credits or ended up floating in space on a toilet seat.
   <br>
         The answer may affect whether you will get similar contracts in the future.
+        <button class="rating-button" data-rating="-2">-2</button>
+        <button class="rating-button" data-rating="-1">-1</button>
+        <button class="rating-button" data-rating="0">0</button>
         <button class="rating-button" data-rating="1">1</button>
         <button class="rating-button" data-rating="2">2</button>
-        <button class="rating-button" data-rating="3">3</button>
-        <button class="rating-button" data-rating="4">4</button>
-        <button class="rating-button" data-rating="5">5</button>
       </div>
       <button class="close-button" id="rating-confirm">Confirm</button>
     </div>
