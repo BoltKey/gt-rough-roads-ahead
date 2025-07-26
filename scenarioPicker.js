@@ -1,11 +1,60 @@
-console.log("Loading scenarioPicker.js");
+console.log("Loading enhanced scenarioPicker.js with rating history");
 let response
 let dataExport;
 
-
 let currScreen = 0;
-
 const activeContract = {}
+
+// Rating history system
+const stats = {
+  singleNoMissionStats: { frequency: [0, 0], rating: 0, baseValue: 0 },
+  trekCustomStats: { frequency: [0, 0], rating: 0, baseValue: 0 },
+  trekNoMissionStats: { frequency: [0, 0], rating: 0, baseValue: 0 },
+  noVIPStats: { frequency: [0, 0], rating: 0, baseValue: 0 },
+  missionStats: {},
+  shipStats: {},
+  RRStats: {
+    0: { frequency: [0, 0], rating: 0, baseValue: 0 },
+    1: { frequency: [0, 0], rating: 0, baseValue: 0 },
+    2: { frequency: [0, 0], rating: 0, baseValue: 0 },
+    3: { frequency: [0, 0], rating: 0, baseValue: 0 }
+  }
+};
+
+// Rating constants
+const ratingConstants = {
+  weightKoef: 0.2,
+  weightSingleMission: 1.0,
+  weightTrekMission: 0.6,
+  ratingWeight: 0.8,
+  ratingExponentKoef: 2.0,
+
+  // Element weights for rating distribution
+  ratingWeight_noMission: 10,
+  ratingWeight_mission: 30,
+  ratingWeight_noVIP: 5,
+  ratingWeight_VIP: 20,
+  ratingWeight_noRR: 5,
+  ratingWeight_RR: 20,
+  ratingWeight_shipBasic: 5,
+  ratingWeight_shipOther: 15,
+
+  // Thresholds for rating validity
+  ratingThreshold_noMission: 5,
+  ratingThreshold_mission: 15,
+  ratingThreshold_VIP: 4,
+  ratingThreshold_RR: 8,
+  ratingThreshold_ship: 4,
+
+  // Evaluation weights
+  evalWeight_roughness: 1.0,
+  evalWeight_complexity: 1.0,
+  evalWeight_historyOffered: [0, 0.25, 0.4, 0.6],
+  evalWeight_historyAccepted: [0, 0.25, 0.4, 0.6],
+  evalWeight_random: 0.2
+};
+
+let totalRatings = 0;
 
 async function setup() {
   try {
@@ -23,10 +72,293 @@ async function setup() {
   }
   console.log({dataExport})
   console.log("picker setup")
-  debugger
+
+  initializeStats();
+  loadStatsFromStorage();
+
   switchPickerScreen(1)
   bindButtons();
   setupOptions();
+}
+
+function initializeStats() {
+  // Initialize mission stats
+  for (let missionName in dataExport.Missions) {
+    if (missionName && missionName !== "" && dataExport.Missions[missionName].frequency !== null) {
+      stats.missionStats[missionName] = { frequency: [0, 0], rating: 0, baseValue: 0 };
+    }
+  }
+
+  // Initialize ship stats
+  const ships = ['shipI', 'shipII', 'shipIII', 'shipIA', 'shipIIA', 'shipIIIA'];
+  ships.forEach(ship => {
+    stats.shipStats[ship] = { frequency: [0, 0], rating: 0, baseValue: 0 };
+  });
+
+  setBaseValues();
+
+  // If no history exists, initialize with base values
+  const hasHistory = localStorage.getItem('contractStats');
+  if (!hasHistory) {
+    initStats();
+  }
+}
+
+function setBaseValues() {
+  stats.singleNoMissionStats.baseValue = getSheetConst("perc_NoMission") / 100 || 0.3;
+  stats.trekNoMissionStats.baseValue = getSheetConst("perc_NoMission") / 100 || 0.3;
+  stats.noVIPStats.baseValue = getSheetConst("perc_NoVIPs") / 100 || 0.4;
+
+  // Mission base values
+  const totalMissionFreq = Object.values(dataExport.Missions)
+    .filter(m => m.frequency !== null && m.frequency !== undefined)
+    .reduce((sum, m) => sum + m.frequency, 0);
+
+  for (let missionName in stats.missionStats) {
+    const mission = dataExport.Missions[missionName];
+    if (mission && mission.frequency !== null) {
+      stats.missionStats[missionName].baseValue = mission.frequency / totalMissionFreq;
+    }
+  }
+
+  // RR base values
+  const totalRRFreq = getFreq("NoRR") + getFreq("RR1") + getFreq("RR2") + getFreq("RR3");
+  if (totalRRFreq > 0) {
+    stats.RRStats[0].baseValue = getFreq("NoRR") / totalRRFreq;
+    stats.RRStats[1].baseValue = getFreq("RR1") / totalRRFreq;
+    stats.RRStats[2].baseValue = getFreq("RR2") / totalRRFreq;
+    stats.RRStats[3].baseValue = getFreq("RR3") / totalRRFreq;
+  }
+
+  // Ship base values (per level)
+  for (let level = 1; level <= 3; level++) {
+    const levelShips = [`ship${"I".repeat(level)}`, `ship${"I".repeat(level)}A`];
+    const totalShipFreq = levelShips.reduce((sum, ship) => sum + getFreq(ship), 0);
+
+    if (totalShipFreq > 0) {
+      levelShips.forEach(ship => {
+        if (stats.shipStats[ship]) {
+          stats.shipStats[ship].baseValue = getFreq(ship) / totalShipFreq;
+        }
+      });
+    }
+  }
+}
+
+function initStats() {
+  function initStat(stat) {
+    stat.frequency[0] = stat.baseValue;
+    stat.frequency[1] = stat.baseValue;
+    stat.rating = 0;
+  }
+
+  initStat(stats.singleNoMissionStats);
+  initStat(stats.trekNoMissionStats);
+  initStat(stats.noVIPStats);
+
+  Object.values(stats.missionStats).forEach(initStat);
+  Object.values(stats.shipStats).forEach(initStat);
+  Object.values(stats.RRStats).forEach(initStat);
+}
+
+function registerStat(stat, accepted, used, weight) {
+  const valueToRegister = used ? 1 : 0;
+  const w = weight * ratingConstants.weightKoef;
+  stat.frequency[accepted ? 1 : 0] = stat.frequency[accepted ? 1 : 0] * (1 - w) + valueToRegister * w;
+}
+
+function registerContract(contract, accepted) {
+  const isTrek = contract.isTrek || false;
+
+  if (!isTrek) {
+    const noMission = !contract.mission || contract.mission === "<no mission>";
+    registerStat(stats.singleNoMissionStats, accepted, noMission, 1);
+    registerFlight(contract, accepted, ratingConstants.weightSingleMission);
+  } else {
+    // Trek logic would go here
+    const noMission = !contract.mission || contract.mission === "<no mission>";
+    registerStat(stats.trekNoMissionStats, accepted, noMission, 1);
+    registerFlight(contract, accepted, ratingConstants.weightTrekMission);
+  }
+}
+
+function registerFlight(flight, accepted, weight) {
+  // Register mission
+  if (flight.mission && stats.missionStats[flight.mission]) {
+    Object.keys(stats.missionStats).forEach(missionName => {
+      registerStat(stats.missionStats[missionName], accepted, missionName === flight.mission, weight);
+    });
+  }
+
+  // Register VIP
+  const noVIP = !flight.vip;
+  registerStat(stats.noVIPStats, accepted, noVIP, weight);
+
+  // Register ship
+  if (flight.ship && stats.shipStats[flight.ship]) {
+    const level = flight.flight || flight.level || 1;
+    const levelShips = [`ship${"I".repeat(level)}`, `ship${"I".repeat(level)}A`];
+    levelShips.forEach(shipName => {
+      if (stats.shipStats[shipName]) {
+        registerStat(stats.shipStats[shipName], accepted, shipName === flight.ship, weight);
+      }
+    });
+  }
+
+  // Register RR
+  const rrCount = flight["num-rr"] || 0;
+  for (let r = 0; r <= 3; r++) {
+    registerStat(stats.RRStats[r], accepted, r === rrCount, weight);
+  }
+}
+
+function applyRating(origRating, actRating, threshold, relWeight, ratingCount) {
+  const validity = Math.min(1, ratingCount / threshold);
+  const w = ratingConstants.ratingWeight * validity * relWeight;
+  return (1 - w) * origRating + w * actRating;
+}
+
+function applyContractRating(contract, rating) {
+  totalRatings++;
+
+  // Define contract elements and their properties
+  const elements = [
+    {
+      key: contract.mission && contract.mission !== "<no mission>" ? "mission" : "noMission",
+      stat: contract.mission && contract.mission !== "<no mission>" ? stats.missionStats[contract.mission] : stats.singleNoMissionStats,
+      weight: contract.mission && contract.mission !== "<no mission>" ? ratingConstants.ratingWeight_mission : ratingConstants.ratingWeight_noMission,
+      threshold: contract.mission && contract.mission !== "<no mission>" ? ratingConstants.ratingThreshold_mission : ratingConstants.ratingThreshold_noMission,
+      enabled: true
+    },
+    {
+      key: contract.vip ? "VIP" : "noVIP",
+      stat: contract.vip ? null : stats.noVIPStats,
+      weight: contract.vip ? ratingConstants.ratingWeight_VIP : ratingConstants.ratingWeight_noVIP,
+      threshold: contract.vip ? ratingConstants.ratingThreshold_VIP : ratingConstants.ratingThreshold_VIP,
+      enabled: !contract.vip // Only apply rating to noVIPStats if not VIP
+    },
+    {
+      key: (contract["num-rr"] || 0) > 0 ? "RR" : "noRR",
+      stat: stats.RRStats[contract["num-rr"] || 0],
+      weight: (contract["num-rr"] || 0) > 0 ? ratingConstants.ratingWeight_RR : ratingConstants.ratingWeight_noRR,
+      threshold: ratingConstants.ratingThreshold_RR,
+      enabled: true
+    },
+    {
+      key: (!contract.ship || !contract.ship.includes('A')) ? "shipBasic" : "shipOther",
+      stat: contract.ship ? stats.shipStats[contract.ship] : null,
+      weight: (!contract.ship || !contract.ship.includes('A')) ? ratingConstants.ratingWeight_shipBasic : ratingConstants.ratingWeight_shipOther,
+      threshold: ratingConstants.ratingThreshold_ship,
+      enabled: !!contract.ship
+    }
+  ];
+
+  // Calculate total weight
+  const totalWeight = elements.reduce((sum, el) => sum + (el.enabled ? el.weight : 0), 0);
+
+  // Apply ratings
+  elements.forEach(el => {
+    if (el.enabled && el.stat) {
+      const relWeight = el.weight / totalWeight;
+      el.stat.rating = applyRating(
+        el.stat.rating,
+        rating,
+        el.threshold,
+        relWeight,
+        totalRatings
+      );
+    }
+  });
+
+  saveStatsToStorage();
+}
+
+function getDesire(stat) {
+  const ratingExponent = Math.pow(2, -stat.rating * ratingConstants.ratingExponentKoef);
+  const idealRatio = Math.pow(stat.baseValue, ratingExponent);
+
+  return {
+    offered: stat.frequency[0] > 0 ? idealRatio / stat.frequency[0] : 1,
+    accepted: stat.frequency[1] > 0 ? idealRatio / stat.frequency[1] : 1
+  };
+}
+
+function getContractDesire(contract) {
+  let desireOffered = 1;
+  let desireAccepted = 1;
+  let count = 0;
+
+  // Mission desire
+  if (contract.mission && contract.mission !== "<no mission>" && stats.missionStats[contract.mission]) {
+    const desire = getDesire(stats.missionStats[contract.mission]);
+    desireOffered *= desire.offered;
+    desireAccepted *= desire.accepted;
+    count++;
+  } else {
+    const desire = getDesire(stats.singleNoMissionStats);
+    desireOffered *= desire.offered;
+    desireAccepted *= desire.accepted;
+    count++;
+  }
+
+  // VIP desire
+  if (!contract.vip) {
+    const desire = getDesire(stats.noVIPStats);
+    desireOffered *= desire.offered;
+    desireAccepted *= desire.accepted;
+    count++;
+  }
+
+  // RR desire
+  const rrCount = contract["num-rr"] || 0;
+  if (stats.RRStats[rrCount]) {
+    const desire = getDesire(stats.RRStats[rrCount]);
+    desireOffered *= desire.offered;
+    desireAccepted *= desire.accepted;
+    count++;
+  }
+
+  // Ship desire
+  if (contract.ship && stats.shipStats[contract.ship]) {
+    const desire = getDesire(stats.shipStats[contract.ship]);
+    desireOffered *= desire.offered;
+    desireAccepted *= desire.accepted;
+    count++;
+  }
+
+  // Return geometric average
+  return {
+    offered: count > 0 ? Math.pow(desireOffered, 1/count) : 1,
+    accepted: count > 0 ? Math.pow(desireAccepted, 1/count) : 1
+  };
+}
+
+function saveStatsToStorage() {
+  localStorage.setItem('contractStats', JSON.stringify(stats));
+  localStorage.setItem('totalRatings', totalRatings.toString());
+}
+
+function loadStatsFromStorage() {
+  const savedStats = localStorage.getItem('contractStats');
+  const savedRatings = localStorage.getItem('totalRatings');
+
+  if (savedStats) {
+    try {
+      const loadedStats = JSON.parse(savedStats);
+      // Merge loaded stats with initialized structure
+      Object.keys(stats).forEach(key => {
+        if (loadedStats[key]) {
+          Object.assign(stats[key], loadedStats[key]);
+        }
+      });
+    } catch (e) {
+      console.error('Error loading stats from storage:', e);
+    }
+  }
+
+  if (savedRatings) {
+    totalRatings = parseInt(savedRatings) || 0;
+  }
 }
 
 function setupDoubleRange(minId, maxId, valuesId) {
@@ -49,8 +381,6 @@ function setupDoubleRange(minId, maxId, valuesId) {
   maxInput.addEventListener('input', updateRange);
   updateRange();
 }
-
-
 
 function setupOptions() {
   var gt2Checkbox = document.getElementById('use-GT2');
@@ -128,7 +458,9 @@ function setupOptions() {
   document.querySelector("#rating-confirm").addEventListener('click', (evt) => {
     const selectedRating = document.querySelector('.rating-button.selected');
     if (selectedRating) {
-      saveContractRating()
+      const rating = parseInt(selectedRating.dataset.rating) || 0;
+      applyContractRating(activeContract, rating);
+      console.log('Applied rating:', rating, 'to contract:', activeContract);
     }
     switchPickerScreen("3");
   });
@@ -155,12 +487,6 @@ function setupOptions() {
   }
   setupDoubleRange('complexity-min', 'complexity-max', 'complexity-values');
   setupDoubleRange('roughness-min', 'roughness-max', 'roughness-values');
-}
-
-function saveContractRating(contract, rating) {
-  const history = JSON.parse(localStorage.getItem("contractRatings")) || [];
-  history.push({ contract, rating });
-  localStorage.setItem("contractRatings", JSON.stringify(history));
 }
 
 function getContractAttrLabel(attr, value, level) {
@@ -306,7 +632,8 @@ function switchPickerScreen(id) {
     }, 500); // Simulate loading time
   }
   if (id === "launch") {
-    recordContractAccepted(activeContract);
+    registerContract(activeContract, true);
+    console.log('Contract accepted and registered:', activeContract);
   }
 }
 
@@ -345,6 +672,10 @@ function getSheetConst(constName) {
 
 function getSetting(constName) {
   const setting = document.querySelector(`#${constName}`);
+  if (!setting) {
+    console.warn(`Setting ${constName} not found`);
+    return null;
+  }
   if (setting.type === "checkbox") {
     return setting.checked ? "on" : "off";
   }
@@ -365,6 +696,8 @@ function getContractFit(contract) {
   const maxComplexity = getSheetConst("complexity_" + getSetting("complexity-max")) || 5;
   const minRoughness = getSheetConst("roughness_" + getSetting("roughness-min")) || 0;
   const maxRoughness = getSheetConst("roughness_" + getSetting("roughness-max")) || 5;
+
+  // Complexity compliance
   let complexityCompliance = 1;
   if (attrs.complexity < minComplexity) {
     complexityCompliance *= attrs.complexity / minComplexity;
@@ -372,6 +705,8 @@ function getContractFit(contract) {
   if (attrs.complexity > maxComplexity) {
     complexityCompliance *= maxComplexity / attrs.complexity;
   }
+
+  // Roughness compliance
   let roughnessCompliance = 1;
   if (attrs.roughness < minRoughness) {
     roughnessCompliance *= attrs.roughness / minRoughness;
@@ -379,11 +714,28 @@ function getContractFit(contract) {
   if (attrs.roughness > maxRoughness) {
     roughnessCompliance *= maxRoughness / attrs.roughness;
   }
-  let randomElement = Math.pow(2, Math.random() * 2 - 1);
 
-  return Math.pow(complexityCompliance, 1) *
-  Math.pow(roughnessCompliance, 1) *
-  Math.pow(randomElement, 0.2);
+  // Random element
+  const randomElement = Math.pow(2, Math.random() * 2 - 1);
+
+  // Contract desire (history-based evaluation)
+  const contractDesire = getContractDesire(contract);
+
+  // Get history weight settings (0-3 scale from UI)
+  const offeredSetting = getSetting("history-offered-weight") || 1;
+  const acceptedSetting = getSetting("history-accepted-weight") || 1;
+
+  const offeredWeight = ratingConstants.evalWeight_historyOffered[offeredSetting] || 0.25;
+  const acceptedWeight = ratingConstants.evalWeight_historyAccepted[acceptedSetting] || 0.25;
+
+  // Enhanced evaluation with history
+  const result = Math.pow(complexityCompliance, ratingConstants.evalWeight_complexity) *
+    Math.pow(roughnessCompliance, ratingConstants.evalWeight_roughness) *
+    Math.pow(contractDesire.offered, offeredWeight) *
+    Math.pow(contractDesire.accepted, acceptedWeight) *
+    Math.pow(randomElement, ratingConstants.evalWeight_random);
+
+  return result;
 }
 
 function getContractAttrs(contract) {
@@ -419,32 +771,6 @@ function getContractAttrs(contract) {
     roughness: result.R * 100,
   };
 }
-
-function recordContractOffered(contract) {
-  const weight = 1;
-  registerStat("ship" + contract.ship, false, true, weight);
-  registerStat("mission" + contract.mission, false, true, weight);
-  registerStat("VIP", false, contract.vip, weight);
-  registerStat("RR" + contract["num-rr"], false, true, weight);
-}
-
-function recordContractAccepted(contract) {
-  const weight = getSheetConst("weight_singleMission"); // or weight_trekMission
-  registerStat("ship" + contract.ship, true, true, weight);
-  registerStat("mission" + contract.mission, true, true, weight);
-  registerStat("VIP", true, contract.vip, weight);
-  registerStat("RR" + contract["num-rr"], true, true, weight);
-}
-
-function registerStat(statName, accepted, used, weight) {
-  const weightKoef = getSheetConst("weight_koef") || 0.2;
-  const key = `${statName}:${accepted ? "accepted" : "offered"}`;
-  let value = parseFloat(localStorage.getItem(key)) || 0;
-  const target = used ? 1 : 0;
-  value = value * (1 - weight * weightKoef) + target * (weight * weightKoef);
-  localStorage.setItem(key, value);
-}
-
 
 function randomContract() {
   let possibleLevels = [];
@@ -538,15 +864,21 @@ function randomContract() {
 
 function getContract() {
   let candidate = null;
-  for (let i = 0; i < getSheetConst("singleFlightAttempts"); i++) {
+  const attempts = getSheetConst("singleFlightAttempts") || 25;
+
+  for (let i = 0; i < attempts; i++) {
     const contract = randomContract();
     contract.fit = getContractFit(contract);
     if (!candidate || contract.fit >= candidate.fit) {
       candidate = contract;
     }
   }
-  recordContractOffered(candidate);
+
+  // Register this contract as offered
+  registerContract(candidate, false);
   addAttrsToContract(candidate);
+
+  console.log('Generated contract with fit:', candidate.fit, candidate);
   return candidate;
 }
 
@@ -555,9 +887,27 @@ function addAttrsToContract(contract) {
   Object.assign(contract, attrs);
 }
 
+// Debug function to view current stats
+function viewStats() {
+  console.log('Current stats:', stats);
+  console.log('Total ratings:', totalRatings);
+
+  // Show some interesting derived values
+  console.log('Contract desires for sample elements:');
+  Object.keys(stats.missionStats).slice(0, 3).forEach(mission => {
+    const desire = getDesire(stats.missionStats[mission]);
+    console.log(`${mission}: offered=${desire.offered.toFixed(2)}, accepted=${desire.accepted.toFixed(2)}, rating=${stats.missionStats[mission].rating.toFixed(2)}`);
+  });
+}
+
+// Expose debug function globally
+window.viewStats = viewStats;
 
 window.addEventListener("load", setup);
 
 export {
-  getContract
+  getContract,
+  viewStats,
+  applyContractRating,
+  stats
 };
