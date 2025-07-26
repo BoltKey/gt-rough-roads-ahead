@@ -84,22 +84,6 @@ let app = {
 		}
 		this.updateButtonStrings();
 
-    for (let expName of ["GT2", "GT3"]) {
-      let checkbox = document.getElementById('have-' + expName);
-      let image = document.getElementById('have-' + expName + '-img');
-
-      checkbox?.addEventListener('change', () => {
-        image.classList.toggle('picked', checkbox.checked);
-      });
-    }
-    for (let shipName of ["1", "2", "3", "3a"]) {
-      let checkbox = document.getElementById('ship-' + shipName);
-      let image = document.getElementById('ship-' + shipName + '-img');
-
-      checkbox?.addEventListener('change', () => {
-        image.classList.toggle('picked', checkbox.checked);
-      });
-    }
 
 		document.getElementById("draw-button").addEventListener("click", function(e) {this.drawCard()}.bind(this), this);
 		document.getElementById("draw-number").addEventListener("click", function(e) {this.drawCard()}.bind(this), this);

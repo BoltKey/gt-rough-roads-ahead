@@ -29,6 +29,29 @@ async function setup() {
   setupOptions();
 }
 
+function setupDoubleRange(minId, maxId, valuesId) {
+  const minInput = document.getElementById(minId);
+  const maxInput = document.getElementById(maxId);
+  const rangeValues = document.getElementById(valuesId);
+  function updateRange(evt) {
+    console.log("updating range", minInput.value, maxInput.value);
+    let min = Math.min(Number(minInput.value), Number(maxInput.value));
+    let max = Math.max(Number(minInput.value), Number(maxInput.value));
+    minInput.value = min;
+    maxInput.value = max;
+    let textContent = `${getContractAttrLabel(minInput.name.slice(0, -4), undefined, min)} to ${getContractAttrLabel(maxInput.name.slice(0, -4), undefined, max)}`;
+    if (min === max) {
+      textContent = getContractAttrLabel(minInput.name.slice(0, -4), undefined, min);
+    }
+    rangeValues.textContent = textContent;
+  }
+  minInput.addEventListener('input', updateRange);
+  maxInput.addEventListener('input', updateRange);
+  updateRange();
+}
+
+
+
 function setupOptions() {
   var gt2Checkbox = document.getElementById('use-GT2');
   var gt2ShipOptions = document.getElementById('gt2-ship-options');
@@ -66,11 +89,11 @@ function setupOptions() {
       }
     });
   }
-  for (let name of ["digital-rr", "gt2-option-rr"]) {
+  for (let name of ["have-digital-rr", "gt2-option-rr"]) {
     const setting = document.querySelector(`#${name}`);
     setting.addEventListener("change", (evt) => {
       if (evt.target.checked) {
-        const otherSetting = ["digital-rr", "gt2-option-rr"].find(n => n !== name);
+        const otherSetting = ["have-digital-rr", "gt2-option-rr"].find(n => n !== name);
         document.querySelectorAll(`#${otherSetting}`).forEach(el => {
           el.checked = false;
         });
@@ -107,11 +130,31 @@ function setupOptions() {
     if (selectedRating) {
       saveContractRating()
     }
+    switchPickerScreen("3");
   });
   if (gt2Checkbox) {
     gt2Checkbox.addEventListener('change', updateGT2Options);
     updateGT2Options();
   }
+
+  for (let expName of ["digital-rr", "GT", "GT2", "GT3"]) {
+    let checkbox = document.getElementById('have-' + expName);
+    let image = document.getElementById('have-' + expName + '-img');
+
+    checkbox?.addEventListener('change', () => {
+      image.classList.toggle('picked', checkbox.checked);
+    });
+  }
+  for (let shipName of ["1", "2", "3", "3a"]) {
+    let checkbox = document.getElementById('ship-' + shipName);
+    let image = document.getElementById('ship-' + shipName + '-img');
+
+    checkbox?.addEventListener('change', () => {
+      image.classList.toggle('picked', checkbox.checked);
+    });
+  }
+  setupDoubleRange('complexity-min', 'complexity-max', 'complexity-values');
+  setupDoubleRange('roughness-min', 'roughness-max', 'roughness-values');
 }
 
 function saveContractRating(contract, rating) {
@@ -120,45 +163,51 @@ function saveContractRating(contract, rating) {
   localStorage.setItem("contractRatings", JSON.stringify(history));
 }
 
-function getContractAttrLabel(attr, value) {
-  const thresholds = {
-    C: {
-      0.5: "not complex",
-      0.75: "not that complex",
-      1.0: "medium complexity",
-      1.25: "quite complex",
-      9999: "very complex"
-    },
-    R: {
-      0.5: "very easy",
-      0.75: "easy",
-      1.0: "medium",
-      1.25: "harsh",
-      9999: "very harsh"
-    }
+function getContractAttrLabel(attr, value, level) {
+  const labels = {
+    complexity: [
+      "simple",
+      "simple",
+      "not that complex",
+      "rather complex",
+      "complex",
+      "very complex",
+      "more than very complex",
+    ],
+    roughness: [
+      "not that harsh",
+      "not that harsh",
+      "harsh",
+      "very harsh",
+      "extremely harsh",
+      "ultimately harsh",
+      "more than ultimately harsh",
+    ]
   };
-  const attrThresholds = thresholds[attr];
-  if (attrThresholds) {
-    for (let threshold in attrThresholds) {
-      if (value <= threshold) {
-        return attrThresholds[threshold];
-      }
+  if (level !== undefined) {
+    return labels[attr][level];
+  }
+  let result = labels[attr][0];
+  for (let threshold of "0123456") {
+    if (getSheetConst(`${attr}_${threshold}`) > value || threshold === "6") {
+      return labels[attr][threshold];
     }
   }
 }
 
 function updateContract(contract) {
   Object.assign(activeContract, contract);
+  addAttrsToContract(activeContract);
   for (let [targetQuery, inputQuery, content, inputContent] of [
-    [".ship-icon-selected, .ship-big-image", ".ship-select", contract.ship],
-    [".mission-name", ".mission-select", contract.mission],
-    [".vip-status", ".use-vips", contract.vip === undefined ? undefined : (contract.vip ? "Play VIPs" : "Don't play VIPs"), contract.vip],
-    [".rr-amount", ".num-rr", contract["num-rr"]],
-    [".fit-value", "", contract.fit?.toFixed(2)],
-    [".complexity-value", "", contract.complexity],
-    [".roughness-value", "", contract.roughness],
-    ["#contract-complexity", "", getContractAttrLabel("C", contract.complexity)],
-    ["#contract-roughness", "", getContractAttrLabel("R", contract.roughness)],
+    [".ship-icon-selected, .ship-big-image", ".ship-select", activeContract.ship],
+    [".mission-name", ".mission-select", activeContract.mission],
+    [".vip-status", ".use-vips", activeContract.vip === undefined ? undefined : (activeContract.vip ? "Play VIPs" : "Don't play VIPs"), contract.vip],
+    [".rr-amount", ".num-rr", activeContract["num-rr"]],
+    [".fit-value", "", activeContract.fit?.toFixed(2)],
+    [".complexity-value", "", activeContract.complexity],
+    [".roughness-value", "", activeContract.roughness],
+    ["#contract-complexity", "", getContractAttrLabel("complexity", activeContract.complexity)],
+    ["#contract-roughness", "", getContractAttrLabel("roughness", activeContract.roughness)],
   ]) {
     if (content === null || content === undefined) {
       continue;
@@ -208,6 +257,25 @@ At the start of the flight, roll a die to determine which direction will be the 
       }
     });
   }
+  for (let instruction of document.querySelectorAll(".instructions")) {
+    instruction.classList.add("hidden");
+  }
+  for (let instruction of ["ship", "mission", "vip", "rr"]) {
+    let query = `.${instruction}-instructions`;
+    if (instruction === "ship") {
+      query += ` .${activeContract.ship}`;
+    }
+    const instructionTexts = document.querySelectorAll(query);
+    if (instructionTexts) {
+      instructionTexts.forEach(instructionText => {
+        instructionText.classList.add("hidden");
+        if (activeContract[instruction] && activeContract[instruction] !== "<no mission>") {  // consider all falsy values including 0 (for rr)
+          instructionText.classList.remove("hidden");
+        }
+      });
+    }
+  }
+  document.querySelector(".credits-amt").textContent = activeContract.flight * 10;
 }
 
 function switchPickerScreen(id) {
@@ -276,7 +344,7 @@ function getSheetConst(constName) {
 
 function getSetting(constName) {
   const setting = document.querySelector(`#${constName}`);
-  if (setting.checked !== undefined) {
+  if (setting.type === "checkbox") {
     return setting.checked ? "on" : "off";
   }
   return setting ? setting.value : null;
@@ -292,7 +360,29 @@ function getPc(constName) {
 
 function getContractFit(contract) {
   const attrs = getContractAttrs(contract);
-  return Math.random();
+  const minComplexity = getSheetConst("complexity_" + getSetting("complexity-min")) || 0;
+  const maxComplexity = getSheetConst("complexity_" + getSetting("complexity-max")) || 5;
+  const minRoughness = getSheetConst("roughness_" + getSetting("roughness-min")) || 0;
+  const maxRoughness = getSheetConst("roughness_" + getSetting("roughness-max")) || 5;
+  let complexityCompliance = 1;
+  if (attrs.complexity < minComplexity) {
+    complexityCompliance *= attrs.complexity / minComplexity;
+  }
+  if (attrs.complexity > maxComplexity) {
+    complexityCompliance *= maxComplexity / attrs.complexity;
+  }
+  let roughnessCompliance = 1;
+  if (attrs.roughness < minRoughness) {
+    roughnessCompliance *= attrs.roughness / minRoughness;
+  }
+  if (attrs.roughness > maxRoughness) {
+    roughnessCompliance *= maxRoughness / attrs.roughness;
+  }
+  let randomElement = Math.pow(2, Math.random() * 2 - 1);
+
+  return Math.pow(complexityCompliance, 1) *
+  Math.pow(roughnessCompliance, 1) *
+  Math.pow(randomElement, 0.2);
 }
 
 function getContractAttrs(contract) {
@@ -302,22 +392,27 @@ function getContractAttrs(contract) {
     let attrValue = 1
     let attrs = [""]
     if (contract.ship) {
-      attrs.push("Ship" + contract.ship);
+      attrs.push(contract.ship);
     }
     if (contract.vip) {
       attrs.push("VIP");
     }
     if (contract["num-rr"] > 0) {
-      attrs.push("RR " + contract.roughRoads + " cards");
+      attrs.push("RR " + contract["num-rr"] + " cards");
     }
     for (let attr of attrs) {
-      attrValue *= missionAttrs[attr + key] / 100 || 1;
+      if (key === "C") {
+        attrValue += missionAttrs[attr + key] || 0;
+      }
+      else {
+        attrValue *= missionAttrs[attr + key] / 100 || 1;
+      }
     }
     result[key] = attrValue;
   }
   return {
     complexity: result.C,
-    roughness: result.R,
+    roughness: result.R * 100,
   };
 }
 
@@ -409,7 +504,7 @@ function randomContract() {
     vip = Math.random() < getPc("NoVIPs");
   }
   let roughRoads = 2;
-  if (getSetting("digital-rr") === "off" && getSetting("gt2-option-rr") === "off") {
+  if (getSetting("have-digital-rr") === "off" && getSetting("gt2-option-rr") === "off") {
     roughRoads = 0;
   }
   else {
@@ -430,6 +525,7 @@ function randomContract() {
   let contract = {
     mission: mission.name,
     ship,
+    flight: pickedFlight,
     vip,
     "num-rr": roughRoads,
   };
@@ -440,23 +536,20 @@ function getContract() {
   let candidate = null;
   for (let i = 0; i < getSheetConst("singleFlightAttempts"); i++) {
     const contract = randomContract();
-    const fit = getContractFit(contract);
-    if (fit >= getSheetConst("minContractFit")) {
+    contract.fit = getContractFit(contract);
+    if (!candidate || contract.fit >= candidate.fit) {
       candidate = contract;
     }
   }
   recordContractOffered(candidate);
-  const attrs = getContractAttrs(candidate);
-  return {
-    ...candidate,
-    fit: getContractFit(candidate),
-    complexity: attrs.complexity,
-    roughness: attrs.roughness,
-  };
+  addAttrsToContract(candidate);
+  return candidate;
 }
 
-
-
+function addAttrsToContract(contract) {
+  const attrs = getContractAttrs(contract);
+  Object.assign(contract, attrs);
+}
 
 
 window.addEventListener("load", setup);

@@ -205,3 +205,8 @@
 :is(.ship-icon-selected, .ship-big-image)[data-ship="shipIIIA"] {
   background-image: url(images/ship-icons/ship_icon3a.webp);
 }
+
+.complexity .slider-label, .roughness .slider-label {
+  height: 200px;
+  display: inline-block;
+}

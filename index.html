@@ -120,7 +120,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <input type="checkbox" id="have-GT" checked disabled>
             <label for="have-GT">
               <span data-id="have-GT" class="have-expansion">We have the base game.</span>
-              <img id="have-GT-img" class="exp-pick-image" src="images/box-images/GTbox.png">
+              <img id="have-GT-img" class="exp-pick-image picked" src="images/box-images/GTbox.png">
             </label>
           </div>
           <div id="gt-options" style="display: none; margin-left: 32px;">
@@ -167,10 +167,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           <label for="gt2-option-vip"><span>Include the VIPs.</span></label>
         </div>
         <div class="exp-pick-image-wrap">
-          <input type="checkbox" id="digital-rr">
-          <label for="include-digital-rr">
-            <span data-id="include-digital-rr" class="have-expansion">Include the web version of Rough Roads.</span>
-            <img id="include-rr-img" class="exp-pick-image" src="images/box-images/RRbox.png">
+          <input type="checkbox" id="have-digital-rr">
+          <label for="have-digital-rr">
+            <span data-id="have-digital-rr" class="have-expansion">Include the web version of Rough Roads.</span>
+            <img id="have-digital-rr-img" class="exp-pick-image" src="images/box-images/RRbox.png">
           </label>
         </div>
       </div>
@@ -194,42 +194,24 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
       <div class="complexity">
         <label for="complexity-min" class="localizable" data-id="complexity_min">Complexity:
-          <span id="complexity-values" style="margin-left:16px;">3 - 7</span>
         </label>
         <div class="double-range-wrap">
-          <input type="range" class="double-range-min double-range" name="complexity-min" id="complexity-min" min="1" max="10" value="3">
-          <input type="range" class="double-range-max double-range" name="complexity-max" id="complexity-max" min="1" max="10" value="7">
+          <input type="range" class="double-range-min double-range" name="complexity-min" id="complexity-min" min="1" max="5" value="2">
+          <input type="range" class="double-range-max double-range" name="complexity-max" id="complexity-max" min="1" max="5" value="4">
         </div>
+          <div id="complexity-values" class="slider-label" style="margin-left:16px;"></div>
       </div>
       <div class="roughness">
         <label for="roughness-min" class="localizable" data-id="roughness_min">Roughness:
-          <span id="roughness-values" style="margin-left:16px;">3 - 7</span>
         </label>
         <div class="double-range-wrap">
-          <input type="range" class="double-range-min double-range" name="roughness-min" id="roughness-min" min="1" max="10" value="3">
-          <input type="range" class="double-range-max double-range" name="roughness-max" id="roughness-max" min="1" max="10" value="7">
+          <input type="range" class="double-range-min double-range" name="roughness-min" id="roughness-min" min="1" max="5" value="2">
+          <input type="range" class="double-range-max double-range" name="roughness-max" id="roughness-max" min="1" max="5" value="4">
         </div>
+          <div id="roughness-values" class="slider-label" style="margin-left:16px;"></div>
       </div>
       <script>
-        function setupDoubleRange(minId, maxId, valuesId) {
-          const minInput = document.getElementById(minId);
-          const maxInput = document.getElementById(maxId);
-          const rangeValues = document.getElementById(valuesId);
-          function updateRange(evt) {
-            console.log("updating range", minInput.value, maxInput.value);
-            let min = Math.min(Number(minInput.value), Number(maxInput.value));
-            let max = Math.max(Number(minInput.value), Number(maxInput.value));
-            minInput.value = min;
-            maxInput.value = max;
-            rangeValues.textContent = `${min} - ${max}`;
-          }
-          minInput.addEventListener('input', updateRange);
-          maxInput.addEventListener('input', updateRange);
-          updateRange();
-        }
 
-        setupDoubleRange('complexity-min', 'complexity-max', 'complexity-values');
-        setupDoubleRange('roughness-min', 'roughness-max', 'roughness-values');
       </script>
       <input type="button" name="continue" data-next="2" value="Previous Step" data-id="previous_step"></input>
       <input type="button" name="continue" data-next="loading" value="Offer me a contract" data-id="continue"></input>
@@ -327,10 +309,13 @@ If a cabin fulfills condition on a VIP card, you may put the corresponding VIP f
     <div class="picker-screen picker-screen-launch">
       <div class='mission-instructions'>Find and read the <span class="mission-name">[mission name]</span>, so everyone understands it. <span class="variant-text">[variant text]</span>.<br>
       </div>
-      Everyone takes the <div class="ship-icon-selected"></div>. Make sure everyone understands the space bending.<br>
-      Everyone gets <span class="credits-amt">[credits]</span> credits (because you are playing a mission).<br>
-      <span class="rainbow-cabin-text">[Everyone gets a rainbow cabin (because you are playing with VIPs). Reveal one VIP card of each color.]</span><br>
-      <span class="rr-text">[Once you complete all other steps reveal <span class="rr-amount">[n]</span> Rough Roads cards in the Rough Roads tab.]</span><br>
+      Everyone takes the following ship: <div class="ship-icon-selected"></div>.
+      <span class='shipIIIA-instructions instructions'>Make sure everyone understands the space bending.</span><br>
+      <span class='mission-instructions'>
+        Everyone gets <span class="credits-amt">[credits]</span> credits (because you are playing a mission).<br>
+      </span>
+      <span class="vip-instructions">Everyone gets a rainbow cabin (because you are playing with VIPs). Reveal one VIP card of each color.</span><br>
+      <span class="rr-instructions">Once you complete all other steps reveal <span class="rr-amount">[n]</span> Rough Roads cards in the Rough Roads tab.</span><br>
       <br>
       Bon Voyage!
       <br>
