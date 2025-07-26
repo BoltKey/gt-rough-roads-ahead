@@ -394,9 +394,6 @@ function getContractAttrs(contract) {
     if (key === "C") {
       attrValue = 0;
     }
-    else {
-      attrValue *= missionAttrs["roughness"] / 100 || 1;
-    }
     let attrs = [""]
     if (contract.ship) {
       attrs.push(contract.ship);
@@ -409,7 +406,7 @@ function getContractAttrs(contract) {
     }
     for (let attr of attrs) {
       if (key === "C") {
-        attrValue += missionAttrs[attr + key] || 0;
+        attrValue += (missionAttrs[attr + key] - 100) || 0;
       }
       else {
         attrValue *= missionAttrs[attr + key] / 100 || 1;
