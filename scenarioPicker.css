@@ -186,24 +186,24 @@
 }
 
 :is(.ship-icon-selected, .ship-big-image)[data-ship="shipI"] {
-  background-image: url(images/ship-icons/ship_icon1.webp);
+  background-image: url(images/ship-icons/ship_board1.webp);
 }
 
 :is(.ship-icon-selected, .ship-big-image)[data-ship="shipII"] {
-  background-image: url(images/ship-icons/ship_icon2.webp);
+  background-image: url(images/ship-icons/ship_board2.webp);
 }
 
 :is(.ship-icon-selected, .ship-big-image)[data-ship="shipIII"] {
-  background-image: url(images/ship-icons/ship_icon3.webp);
+  background-image: url(images/ship-icons/ship_board3.webp);
 }
 :is(.ship-icon-selected, .ship-big-image)[data-ship="shipIA"] {
-  background-image: url(images/ship-icons/ship_icon1a.webp);
+  background-image: url(images/ship-icons/ship_board1a.webp);
 }
 :is(.ship-icon-selected, .ship-big-image)[data-ship="shipIIA"] {
-  background-image: url(images/ship-icons/ship_icon2a.webp);
+  background-image: url(images/ship-icons/ship_board2a.webp);
 }
 :is(.ship-icon-selected, .ship-big-image)[data-ship="shipIIIA"] {
-  background-image: url(images/ship-icons/ship_icon3a.webp);
+  background-image: url(images/ship-icons/ship_board3a.webp);
 }
 
 .complexity .slider-label, .roughness .slider-label {
