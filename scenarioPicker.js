@@ -198,6 +198,7 @@ function getContractAttrLabel(attr, value, level) {
 function updateContract(contract) {
   Object.assign(activeContract, contract);
   addAttrsToContract(activeContract);
+  console.log("Updating contract:", activeContract);
   for (let [targetQuery, inputQuery, content, inputContent] of [
     [".ship-icon-selected, .ship-big-image", ".ship-select", activeContract.ship],
     [".mission-name", ".mission-select", activeContract.mission],
@@ -390,6 +391,12 @@ function getContractAttrs(contract) {
   let result = {}
   for (let key of ["C", "R"]) {
     let attrValue = 1
+    if (key === "C") {
+      attrValue = 0;
+    }
+    else {
+      attrValue *= missionAttrs["roughness"] / 100 || 1;
+    }
     let attrs = [""]
     if (contract.ship) {
       attrs.push(contract.ship);
