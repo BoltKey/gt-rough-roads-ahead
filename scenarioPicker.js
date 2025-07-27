@@ -729,13 +729,14 @@ function getContractFit(contract) {
   const acceptedWeight = ratingConstants.evalWeight_historyAccepted[acceptedSetting] || 0.25;
   const takeRatingIntoAccountWeight = ratingConstants.evalWeight_takeRatingIntoAccount[takeRatingIntoAccount] || 1;
   // Contract desire (history-based evaluation)
-  const contractDesire = Math.pow(getContractDesire(contract), takeRatingIntoAccountWeight);
+  const contractDesire = getContractDesire(contract);
 
   // Enhanced evaluation with history
-  const result = Math.pow(complexityCompliance, ratingConstants.evalWeight_complexity) *
+  const result =
+    Math.pow(complexityCompliance, ratingConstants.evalWeight_complexity) *
     Math.pow(roughnessCompliance, ratingConstants.evalWeight_roughness) *
-    Math.pow(contractDesire.offered, offeredWeight) *
-    Math.pow(contractDesire.accepted, acceptedWeight) *
+    Math.pow(contractDesire.offered ** takeRatingIntoAccountWeight, offeredWeight) *
+    Math.pow(contractDesire.accepted ** takeRatingIntoAccountWeight, acceptedWeight) *
     Math.pow(randomElement, ratingConstants.evalWeight_random);
 
   return result;

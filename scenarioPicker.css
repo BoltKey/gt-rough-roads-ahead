@@ -136,6 +136,10 @@
   background-color: rgba(0, 0, 0, 0.8);
 }
 
+select {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
 .rating-button:not(.selected) {
   filter: grayscale();
 }
@@ -176,6 +180,8 @@
   aspect-ratio: 1;
   background-size: contain;
   display: inline-block;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .ship-big-image {
@@ -185,25 +191,44 @@
   display: inline-block;
 }
 
-:is(.ship-icon-selected, .ship-big-image)[data-ship="shipI"] {
+.ship-big-image[data-ship="shipI"] {
   background-image: url(images/ship-icons/ship_board1.webp);
 }
 
-:is(.ship-icon-selected, .ship-big-image)[data-ship="shipII"] {
+.ship-big-image[data-ship="shipII"] {
   background-image: url(images/ship-icons/ship_board2.webp);
 }
 
-:is(.ship-icon-selected, .ship-big-image)[data-ship="shipIII"] {
+.ship-big-image[data-ship="shipIII"] {
   background-image: url(images/ship-icons/ship_board3.webp);
 }
-:is(.ship-icon-selected, .ship-big-image)[data-ship="shipIA"] {
+.ship-big-image[data-ship="shipIA"] {
   background-image: url(images/ship-icons/ship_board1a.webp);
 }
-:is(.ship-icon-selected, .ship-big-image)[data-ship="shipIIA"] {
+.ship-big-image[data-ship="shipIIA"] {
   background-image: url(images/ship-icons/ship_board2a.webp);
 }
-:is(.ship-icon-selected, .ship-big-image)[data-ship="shipIIIA"] {
+.ship-big-image[data-ship="shipIIIA"] {
   background-image: url(images/ship-icons/ship_board3a.webp);
+}
+
+.ship-icon-selected[data-ship="shipI"] {
+  background-image: url(images/ship-icons/ship_icon1.webp);
+}
+.ship-icon-selected[data-ship="shipII"] {
+  background-image: url(images/ship-icons/ship_icon2.webp);
+}
+.ship-icon-selected[data-ship="shipIII"] {
+  background-image: url(images/ship-icons/ship_icon3.webp);
+}
+.ship-icon-selected[data-ship="shipIA"] {
+  background-image: url(images/ship-icons/ship_icon1a.webp);
+}
+.ship-icon-selected[data-ship="shipIIA"] {
+  background-image: url(images/ship-icons/ship_icon2a.webp);
+}
+.ship-icon-selected[data-ship="shipIIIA"] {
+  background-image: url(images/ship-icons/ship_icon3a.webp);
 }
 
 .complexity .slider-label, .roughness .slider-label {
