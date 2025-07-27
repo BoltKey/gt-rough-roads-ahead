@@ -51,7 +51,7 @@ const ratingConstants = {
   evalWeight_complexity: 1.0,
   evalWeight_historyOffered: [0, 0.25, 0.4, 0.6],
   evalWeight_historyAccepted: [0, 0.25, 0.4, 0.6],
-  evalWeight_takeRatingIntoAccount: [0, 0.25, 0.4, 0.6],
+  evalWeight_takeRatingIntoAccount: [0, 0.3, 0.6, 1],
   evalWeight_random: 0.2
 };
 
@@ -275,7 +275,9 @@ function applyContractRating(contract, rating) {
 }
 
 function getDesire(stat) {
-  const ratingExponent = Math.pow(2, -stat.rating * ratingConstants.ratingExponentKoef);
+  const takeRatingIntoAccount = getSetting("history-rating-weight") || 0;
+  const takeRatingIntoAccountWeight = ratingConstants.evalWeight_takeRatingIntoAccount[takeRatingIntoAccount] || 1;
+  const ratingExponent = Math.pow(2, -stat.rating * ratingConstants.ratingExponentKoef * takeRatingIntoAccountWeight);
   const idealRatio = Math.pow(stat.baseValue, ratingExponent);
 
   return {
@@ -723,11 +725,10 @@ function getContractFit(contract) {
   // Get history weight settings (0-1 scale from UI)
   const offeredSetting = getSetting("history-offered-weight") || 0;
   const acceptedSetting = getSetting("history-accepted-weight") || 0;
-  const takeRatingIntoAccount = getSetting("history-take-rating") || 0;
+
 
   const offeredWeight = ratingConstants.evalWeight_historyOffered[offeredSetting] || 0.25;
   const acceptedWeight = ratingConstants.evalWeight_historyAccepted[acceptedSetting] || 0.25;
-  const takeRatingIntoAccountWeight = ratingConstants.evalWeight_takeRatingIntoAccount[takeRatingIntoAccount] || 1;
   // Contract desire (history-based evaluation)
   const contractDesire = getContractDesire(contract);
 
@@ -735,8 +736,8 @@ function getContractFit(contract) {
   const result =
     Math.pow(complexityCompliance, ratingConstants.evalWeight_complexity) *
     Math.pow(roughnessCompliance, ratingConstants.evalWeight_roughness) *
-    Math.pow(contractDesire.offered ** takeRatingIntoAccountWeight, offeredWeight) *
-    Math.pow(contractDesire.accepted ** takeRatingIntoAccountWeight, acceptedWeight) *
+    Math.pow(contractDesire.offered, offeredWeight) *
+    Math.pow(contractDesire.accepted, acceptedWeight) *
     Math.pow(randomElement, ratingConstants.evalWeight_random);
 
   return result;
