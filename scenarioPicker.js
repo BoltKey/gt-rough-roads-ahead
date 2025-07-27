@@ -4,6 +4,8 @@ let dataExport;
 
 let currScreen = 0;
 const activeContract = {}
+const session_id = localStorage.getItem('session_id') || Math.random().toString(36).substring(2, 15);
+localStorage.setItem('session_id', session_id);
 
 // Rating history system
 const stats = {
@@ -221,7 +223,20 @@ function applyRating(origRating, actRating, threshold, relWeight, ratingCount) {
 
 function applyContractRating(contract, rating) {
   totalRatings++;
-
+  fetch("https://fayuseaeelvpvgtcsxvd.supabase.co/rest/v1/gtContractRatingDump", {
+    method: 'POST',
+      headers: {
+        'apikey': 'sb_publishable_KieZSA6VwitqJffkvyefKA_R2mOy2H-',
+        'Authorization': 'Bearer sb_publishable_KieZSA6VwitqJffkvyefKA_R2mOy2H-',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        session_id: session_id,
+        contract,
+        rating
+      })
+    }
+  )
   // Define contract elements and their properties
   const elements = [
     {
@@ -364,53 +379,64 @@ function loadStatsFromStorage() {
   }
 }
 
-function setupDoubleRange(minId, maxId, valuesId) {
-  const minInput = document.getElementById(minId);
-  const maxInput = document.getElementById(maxId);
+function setupDoubleRange(containerId, valuesId) {
+  const slider = document.getElementById(containerId);
   const rangeValues = document.getElementById(valuesId);
-  function updateRange(evt) {
-    console.log("updating range", minInput.value, maxInput.value);
-    let min = Math.min(Number(minInput.value), Number(maxInput.value));
-    let max = Math.max(Number(minInput.value), Number(maxInput.value));
-    minInput.value = min;
-    maxInput.value = max;
-    let textContent = `${getContractAttrLabel(minInput.name.slice(0, -4), undefined, min)} to ${getContractAttrLabel(maxInput.name.slice(0, -4), undefined, max)}`;
+
+  const attrName = slider.dataset.attr; // assumes ID like "foo-range" → "foo"
+
+  noUiSlider.create(slider, {
+    start: [2, 4], // default range, you can pass these in as needed
+    connect: true,
+    range: {
+      min: 1,
+      max: 5
+    },
+    step: 1
+  });
+
+  slider.noUiSlider.on('update', (values) => {
+    const min = Math.min(+values[0], +values[1]);
+    const max = Math.max(+values[0], +values[1]);
+
+    let textContent = `${getContractAttrLabel(attrName, undefined, min)} to ${getContractAttrLabel(attrName, undefined, max)}`;
     if (min === max) {
-      textContent = getContractAttrLabel(minInput.name.slice(0, -4), undefined, min);
+      textContent = getContractAttrLabel(attrName, undefined, min);
     }
     rangeValues.textContent = textContent;
-  }
-  minInput.addEventListener('input', updateRange);
-  maxInput.addEventListener('input', updateRange);
-  updateRange();
+  });
 }
 
+
 function setupOptions() {
-  var gt2Checkbox = document.getElementById('use-GT2');
-  var gt2ShipOptions = document.getElementById('gt2-ship-options');
+  var gt2Checkbox = document.getElementById('have-GT2');
   var shipSelects = document.querySelectorAll('.ship-select');
-  function updateGT2Options() {
-    if (gt2Checkbox && gt2Checkbox.checked) {
-      gt2ShipOptions.style.display = '';
-      // Add GT2 options if not already present
-      shipSelects.forEach(function(select) {
-        if (!select.querySelector('option[value="ship-IA"]')) {
-          Array.from(gt2ShipOptions.children).forEach(function(opt) {
-            select.appendChild(opt.cloneNode(true));
-          });
-        }
-      });
-    } else {
-      gt2ShipOptions.style.display = 'none';
-      // Remove GT2 options
-      shipSelects.forEach(function(select) {
-        ['ship-IA', 'ship-IB', 'ship-IC'].forEach(function(val) {
-          var opt = select.querySelector('option[value="' + val + '"]');
-          if (opt) select.removeChild(opt);
-        });
-      });
-    }
+  document.querySelectorAll('.digital-rr-button').forEach(el => {
+    el.addEventListener('click', function(evt) {
+      app.changeTab('rough-roads-deck');
+    });
+  });
+  if (totalRatings > 0) {
+    document.querySelector(".history-settings").style.display = "";
   }
+  gt2Checkbox.addEventListener('change', function(evt) {
+    document.getElementById('gt2-options').style.display = evt.target.checked ? 'block' : 'none';
+    document.getElementById('gt-options').style.display = evt.target.checked ? 'block' : 'none';
+    evt.target.parentNode.parentNode.querySelectorAll("*").forEach(function(el) {
+      if (el.type === "checkbox") {
+        el.checked = evt.target.checked;
+      }
+    });
+  });
+  document.getElementById("have-GT3").addEventListener('change', function(evt) {
+    document.getElementById('gt3-options').style.display = evt.target.checked ? 'block' : 'none';
+    evt.target.parentNode.parentNode.querySelectorAll("*").forEach(function(el) {
+      if (el.type === "checkbox") {
+        el.checked = evt.target.checked;
+      }
+    });
+  });
+  document.getElementById("gt2-options").style.display = gt2Checkbox.checked ? "" : "none";
   for (let name of ["gt-option-ships", "gt2-option-ships"]) {
     const setting = document.querySelector(`#${name}`);
     setting.addEventListener("change", (evt) => {
@@ -467,10 +493,6 @@ function setupOptions() {
     }
     switchPickerScreen("3");
   });
-  if (gt2Checkbox) {
-    gt2Checkbox.addEventListener('change', updateGT2Options);
-    updateGT2Options();
-  }
 
   for (let expName of ["digital-rr", "GT", "GT2", "GT3"]) {
     let checkbox = document.getElementById('have-' + expName);
@@ -488,8 +510,8 @@ function setupOptions() {
       image.classList.toggle('picked', checkbox.checked);
     });
   }
-  setupDoubleRange('complexity-min', 'complexity-max', 'complexity-values');
-  setupDoubleRange('roughness-min', 'roughness-max', 'roughness-values');
+  setupDoubleRange('complexity', 'complexity-values');
+  setupDoubleRange('roughness', 'roughness-values');
 }
 
 function getContractAttrLabel(attr, value, level) {
@@ -587,10 +609,11 @@ At the start of the flight, roll a die to determine which direction will be the 
       }
     });
   }
+  document.querySelector(".digital-rr-instructions").style.display = contract["digital-rr"] ? "" : "none";
   for (let instruction of document.querySelectorAll(".instructions")) {
     instruction.classList.add("hidden");
   }
-  for (let instruction of ["ship", "mission", "vip", "rr"]) {
+  for (let instruction of ["ship", "mission", "vip", "num-rr"]) {
     let query = `.${instruction}-instructions`;
     if (instruction === "ship") {
       query += ` .${activeContract.ship}`;
@@ -673,17 +696,28 @@ function getSheetConst(constName) {
   return dataExport.Constants[constName]?.value || null;
 }
 
-function getSetting(constName) {
+function getSetting(constName, getMin) {
   const setting = document.querySelector(`#${constName}`);
   if (!setting) {
     console.warn(`Setting ${constName} not found`);
     return null;
   }
+
+  if (setting.noUiSlider) {
+    const [min, max] = setting.noUiSlider.get().map(Number);
+    if (getMin) {
+      return min;
+    }
+    return max;
+  }
+
   if (setting.type === "checkbox") {
     return setting.checked ? "on" : "off";
   }
-  return setting ? setting.value : null;
+
+  return setting.value ?? null;
 }
+
 
 function getFreq(constName) {
   return getSheetConst("freq_" + constName) || 0;
@@ -695,10 +729,10 @@ function getPc(constName) {
 
 function getContractFit(contract) {
   const attrs = getContractAttrs(contract);
-  const minComplexity = getSheetConst("complexity_" + getSetting("complexity-min")) || 0;
-  const maxComplexity = getSheetConst("complexity_" + getSetting("complexity-max")) || 5;
-  const minRoughness = getSheetConst("roughness_" + getSetting("roughness-min")) || 0;
-  const maxRoughness = getSheetConst("roughness_" + getSetting("roughness-max")) || 5;
+  const minComplexity = getSheetConst("complexity_" + getSetting("complexity", true)) || 0;
+  const maxComplexity = getSheetConst("complexity_" + getSetting("complexity")) || 5;
+  const minRoughness = getSheetConst("roughness_" + getSetting("roughness", true)) || 0;
+  const maxRoughness = getSheetConst("roughness_" + getSetting("roughness")) || 5;
 
   // Complexity compliance
   let complexityCompliance = 1;
@@ -863,6 +897,7 @@ function randomContract() {
     flight: pickedFlight,
     vip,
     "num-rr": roughRoads,
+    "digital-rr": getSetting("have-digital-rr") === "on",
   };
   return contract;
 }
