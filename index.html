@@ -210,6 +210,29 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         </div>
           <div id="roughness-values" class="slider-label" style="margin-left:16px;"></div>
       </div>
+      <div class="history-settings">
+        <select name="history" id="history-offered-weight" class="history-select">
+          <option value="0" selected>Don't take in account</option>
+          <option value="1">Slightly prefer</option>
+          <option value="2">Prefer</option>
+          <option value="3">Strongly prefer</option>
+        </select> what I have not been offered recently.
+        <br>
+        <select name="history" id="history-accepted-weight" class="history-select">
+          <option value="0" selected>Don't take in account</option>
+          <option value="1">Slightly prefer</option>
+          <option value="2">Prefer</option>
+          <option value="3">Strongly prefer</option>
+        </select> what I have not played recently.
+        <br>
+        <select name="history" id="history-rating-weight" class="history-select">
+          <option value="0" selected>Don't take in account</option>
+          <option value="1">Slightly take in account</option>
+          <option value="2">Take in account</option>
+          <option value="3">Strongly take in account</option>
+        </select> what I liked or disliked in the past.
+        <br>
+      </div>
       <script>
 
       </script>
@@ -332,12 +355,14 @@ If a cabin fulfills condition on a VIP card, you may put the corresponding VIP f
         How did your group enjoy this particular contract? Please rate whether it was fun, not whether you made tons of credits or ended up floating in space on a toilet seat.
   <br>
         The answer may affect whether you will get similar contracts in the future.
-        <button class="rating-button" data-rating="-2">-2</button>
-        <button class="rating-button" data-rating="-1">-1</button>
-        <button class="rating-button" data-rating="0">0</button>
-        <button class="rating-button" data-rating="1">1</button>
-        <button class="rating-button" data-rating="2">2</button>
+        <br>
+        <button class="rating-button" data-rating="-2"></button>
+        <button class="rating-button" data-rating="-1"></button>
+        <button class="rating-button" data-rating="0"></button>
+        <button class="rating-button" data-rating="1"></button>
+        <button class="rating-button" data-rating="2"></button>
       </div>
+      <br>
       <button class="close-button" id="rating-confirm">Confirm</button>
     </div>
   </div>

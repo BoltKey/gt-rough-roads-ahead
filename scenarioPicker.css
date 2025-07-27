@@ -210,3 +210,32 @@
   height: 200px;
   display: inline-block;
 }
+
+.rating-button[data-rating="-2"] {
+  background-image: url(images/rating/rating_smiley1.webp);
+}
+.rating-button[data-rating="-1"] {
+  background-image: url(images/rating/rating_smiley2.webp);
+}
+.rating-button[data-rating="0"] {
+  background-image: url(images/rating/rating_smiley3.webp);
+}
+.rating-button[data-rating="1"] {
+  background-image: url(images/rating/rating_smiley4.webp);
+}
+.rating-button[data-rating="2"] {
+  background-image: url(images/rating/rating_smiley5.webp);
+}
+
+.rating-button:not(.selected) {
+  filter: grayscale(100%);
+}
+.rating-button {
+  width: 130px;
+  height: 130px;
+  background-size: contain;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+}
