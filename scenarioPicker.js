@@ -571,7 +571,7 @@ function updateContract(contract) {
       document.querySelectorAll(targetQuery).forEach(el => {
         el.dataset.ship = content;
       });
-      document.querySelector(".popup-ship .popup-text").textContent = {
+      document.querySelector(".popup-ship .ship-text").textContent = {
         "shipI": "Small standard ship.",
         "shipII": "Medium sized standard ship.",
         "shipIII": "Large standard ship.",
@@ -676,7 +676,7 @@ function bindButtons() {
   }
   for (let popup of document.querySelectorAll(".close-popup")) {
     popup.addEventListener("click", (evt) => {
-      for (let popup of document.querySelectorAll(".popup")) {
+      for (let popup of document.querySelectorAll(".popup-wrap")) {
         popup.classList.add("hidden")
       }
     })
@@ -684,7 +684,7 @@ function bindButtons() {
 }
 
 function togglePopup(tab) {
-  for (let popup of document.querySelectorAll(".popup")) {
+  for (let popup of document.querySelectorAll(".popup-wrap")) {
     popup.classList.add("hidden")
     if (popup.classList.contains("popup-" + tab)) {
       popup.classList.remove("hidden")

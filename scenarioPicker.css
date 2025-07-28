@@ -8,24 +8,18 @@
     padding: 10px 5%;
     margin-bottom: 15px;
 }
-#scenario-picker * {
+#scenario-picker {
   font-family: roboto, Arial;
   font-weight: 700;
   font-style: normal;
-  font-size: 40px;
+  font-size: min(24px, 3.5vw);;
   color: white;
+}
+#scenario-picker label {
+  font-size: 150%;
 }
 #scenario-picker .hidden {
   display: none !important;
-}
-
-#scenario-picker-welcome {
-  font-size: 50px;
-}
-
-#scenario-picker :is(.instructions, select) {
-  font-size: 50px;
-  font-family: roboto, Arial;
 }
 
 #scenario-picker option {
@@ -37,8 +31,8 @@
   height: 80px;
 }
 #scenario-picker input[type='checkbox'] {
-  width: 80px;
-  height: 80px;
+  width: 40px;
+  height: 40px;
 }
 
 #scenario-display {
@@ -76,7 +70,7 @@
 
 .double-range-wrap {
   position: relative;
-  height: 120px;
+  height: 80px;
   margin-top: 30px;
 }
 
@@ -99,12 +93,17 @@
   cursor: pointer;
 }
 
-.picker-screen .popup {
-  position: absolute;
+.popup-wrap {
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+}
+
+.picker-screen .popup {
+  position: absolute;
+  top: 2%;
+  left: 5%;
+  width: 90%;
+  height: 90%;
   opacity: 1;
   pointer-events: all;
   background: rgba(30, 40, 100, 0.8);
@@ -127,6 +126,8 @@
 
 select {
   background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  font-size: min(24px, 3.5vw);
 }
 
 .rating-button:not(.selected) {
@@ -150,6 +151,10 @@ select {
   width: 60px;
   height: 60px;
   animation: spin 0.5s linear infinite;
+}
+
+.history-settings {
+  margin-bottom: 20px;
 }
 
 @keyframes spin {
@@ -223,8 +228,7 @@ select {
 }
 
 .complexity .slider-label, .roughness .slider-label {
-  height: 120px;
-  display: inline-block;
+  margin-bottom: 40px;
 }
 
 .rating-button[data-rating="-2"] {
