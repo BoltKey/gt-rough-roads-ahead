@@ -783,7 +783,7 @@ function getContractAttrs(contract) {
   for (let key of ["C", "R"]) {
     let attrValue = 1
     if (key === "C") {
-      attrValue = 0;
+      attrValue = 100;
     }
     let attrs = [""]
     if (contract.ship) {
