@@ -98,7 +98,7 @@ div#title-bottom {
   position: relative;
   background-size: 100% 100%;
   text-align: center;
-  font-size: 300%;
+  font-size: min(5vw, 42px);
   font-family: orgovan-rounded-web, sans-serif;
   display: flex;
   align-items: center;
