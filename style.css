@@ -66,7 +66,7 @@ div#title-bottom {
     align-items: center;
 }
 #title-ship {
-    background: url(images/ship-title.png);
+    background: url(images/ship-title.webp);
     width: 200%;
     left: -50%;
     position: absolute;
