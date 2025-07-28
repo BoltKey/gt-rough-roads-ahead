@@ -1,3 +1,4 @@
+
 #scenario-picker {
     width: 90%;
     height: 100%;
@@ -7,12 +8,44 @@
     overflow: auto;
     padding: 10px 5%;
     margin-bottom: 15px;
-}
-#scenario-picker {
   font-family: roboto, Arial;
   font-style: normal;
   font-size: min(24px, 3.5vw);;
   color: white;
+  --gt-accent-color: #0059ff;
+  --gt-text-color: #4c8bff;
+  --gt2-accent-color: #a500ce;
+  --gt2-text-color: #d6a0ff;
+  --gt3-accent-color: #d10549;
+  --gt3-text-color: #ff6b8c;
+  --rr-accent-color: #f0832a;
+  --rr-text-color: #ffb07a;
+}
+
+.gt input[type='checkbox']:checked {
+  accent-color: var(--gt-accent-color);
+}
+.gt2 input[type='checkbox']:checked {
+  accent-color: var(--gt2-accent-color);
+}
+.gt3 input[type='checkbox']:checked {
+  accent-color: var(--gt3-accent-color);
+}
+.rr input[type='checkbox']:checked {
+  accent-color: var(--rr-accent-color);
+}
+
+span[data-id='have-GT'] {
+  color: var(--gt-text-color);
+}
+span[data-id='have-GT2'] {
+  color: var(--gt2-text-color);
+}
+span[data-id='have-GT3'] {
+  color: var(--gt3-text-color);
+}
+span[data-id='have-digital-rr'] {
+  color: var(--rr-text-color);
 }
 #scenario-picker label {
   font-size: 150%;
@@ -90,6 +123,19 @@
   height: 60px;
   background-image: url(images/info.png);
   cursor: pointer;
+  transform: none;
+  display: inline-block;
+}
+
+.navigation-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.navigation-wrap input[type='button'], .navigation-wrap button {
+  margin: 10px;
 }
 
 .popup-wrap {

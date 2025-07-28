@@ -107,11 +107,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <br>
       To help us perserve your preferences, it is recommended to store history of your contracts:
       <form id="store-form">
-        <input type="radio" name="storage" checked data-id="store_history_device">Store the history on this device</input>
+        <input type="radio" name="storage" checked data-id="store_history_device"></input>
+        <label for="store_history_device">Store the history on this device</label>
         <br>
-        <input type="radio" name="storage" data-id="do_not_store_history">Do not store the history</input>
+        <input type="radio" name="storage" data-id="do_not_store_history"></input>
+        <label for="do_not_store_history">Do not store the history</label>
         <br>
-        <input type="button" name="continue" data-next="2" value="Continue" data-id="continue"></input>
+        <div class="navigation-wrap">
+          <input type="button" name="continue" data-next="2" value="Continue" data-id="continue"></input>
+        </div>
       </form>
     </div>
     <form id="expansion-form" class="picker-screen picker-screen-2">
@@ -119,7 +123,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <div class="localizable instructions" data-id="have-expansion">To know what we can pick from, please select what expansions you own and which parts to include:</label>
       </div>
       <div id="expansion-picker-wrap">
-        <div class="exp-pick-wrap">
+        <div class="exp-pick-wrap gt">
           <div class="exp-pick-image-wrap">
             <input type="checkbox" id="have-GT" disabled checked>
             <label for="have-GT">
@@ -132,7 +136,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <label for="gt-option-ships"><span>Include the base ships</span></label><br>
           </div>
         </div>
-        <div class="exp-pick-wrap">
+        <div class="exp-pick-wrap gt2">
           <div class="exp-pick-image-wrap">
             <input type="checkbox" id="have-GT2">
             <label for="have-GT2">
@@ -154,7 +158,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <label for="gt2-option-rr"><span>Include the Rough Roads physical cards.</span></label>
           </div>
         </div>
-        <div class="exp-pick-wrap">
+        <div class="exp-pick-wrap gt3">
           <div class="exp-pick-image-wrap">
             <input type="checkbox" id="have-GT3">
             <label for="have-GT3">
@@ -170,16 +174,20 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <label for="gt2-option-vip"><span>Include the VIPs.</span></label>
           </div>
         </div>
-        <div class="exp-pick-image-wrap">
-          <input type="checkbox" id="have-digital-rr">
-          <label for="have-digital-rr">
-            <span data-id="have-digital-rr" class="have-expansion">Include the web version of Rough Roads.</span>
-            <img id="have-digital-rr-img" class="exp-pick-image" src="images/box-images/RRbox.png">
-          </label>
+        <div class="exp-pick-wrap rr">
+          <div class="exp-pick-image-wrap">
+            <input type="checkbox" id="have-digital-rr">
+            <label for="have-digital-rr">
+              <span data-id="have-digital-rr" class="have-expansion">Include the web version of Rough Roads.</span>
+              <img id="have-digital-rr-img" class="exp-pick-image" src="images/box-images/RRbox.png">
+            </label>
+          </div>
         </div>
       </div>
-      <input type="button" name="continue" data-next="1" value="Previous Step" data-id="previous_step"></input>
-      <input type="button" name="continue" data-next="3" value="Continue" data-id="continue"></input>
+      <div class="navigation-wrap">
+        <input type="button" name="continue" data-next="1" value="Previous Step" data-id="previous_step"></input>
+        <input type="button" name="continue" data-next="3" value="Continue" data-id="continue"></input>
+      </div>
     </form>
     <form data-id="game-mode-form" class="picker-screen picker-screen-3">
       <div class="localizable instructions" data-id="game_mode_instructions">Perfect. So, what do you feel like playing now?</div>
@@ -238,8 +246,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <script>
 
       </script>
-      <input type="button" name="continue" data-next="2" value="Previous Step" data-id="previous_step"></input>
-      <input type="button" name="continue" data-next="loading" value="Offer me a contract" data-id="continue"></input>
+      <div class="navigation-wrap">
+        <input type="button" name="continue" data-next="2" value="Previous Step" data-id="previous_step"></input>
+        <input type="button" name="continue" data-next="loading" value="Offer me a contract" data-id="continue"></input>
+      </div>
     </form>
     <div class="picker-screen picker-screen-contract">
       <div class="contract-mission">
@@ -259,7 +269,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         </div>
       </div>
       <div class="contract-ship">
-        <span data-id="contract_ship">Use this ship: </span>
+        <div data-id="contract_ship">Use this ship: </div>
         <div class="ship-icon-selected"></div>
         <div class="i-button" data-tab="ship"></div>
         <div class="popup-wrap popup-ship hidden">
@@ -317,15 +327,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <div class="description">
         (This contract is <span id="contract-complexity">[complex]</span> and is <span id="contract-roughness">[rough]</span>)
       </div>
-      <button class="contract-navigation" data-next="3">
-        Previous step
-      </button>
-      <button class="contract-navigation" data-next="loading">
-        Decline
-      </button>
-      <button class="contract-navigation" data-next="launch">
-        Accept
-      </button>
+      <div class="navigation-wrap">
+        <button class="contract-navigation" data-next="3">
+          Previous step
+        </button>
+        <button class="contract-navigation" data-next="loading">
+          Decline
+        </button>
+        <button class="contract-navigation" data-next="launch">
+          Accept
+        </button>
+      </div>
       </div>
     </div>
     <div class="picker-screen picker-screen-launch">
@@ -343,8 +355,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <br>
       <div class='bonvoyage'>Bon Voyage!</div>
       <br>
-      <button class="contract-navigation" data-next="3">Abandon Contract</button>
-      <button class="contract-navigation" data-next="flight-done">Flight Done</button>
+      <div class="navigation-wrap">
+        <button class="contract-navigation" data-next="3">Abandon Contract</button>
+        <button class="contract-navigation" data-next="flight-done">Flight Done</button>
+      </div>
     </div>
     <div class="picker-screen picker-screen-loading">
       Creating contract...
