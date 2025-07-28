@@ -67,6 +67,7 @@ span[data-id='have-digital-rr'] {
   height: 60px;
   min-width: 60px;
   min-height: 60px;
+  margin-right: 10px;
 }
 
 #scenario-display {
@@ -208,7 +209,6 @@ select {
 .setting-wrap {
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
 }
 
 .setting-icon {
