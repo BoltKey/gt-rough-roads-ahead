@@ -660,7 +660,8 @@ span.i-icon {
 
 .exp-pick-image, .ship-pick-image {
   filter: grayscale(0.8);
-  transition: filter .1s;
+  opacity: 0.8;
+  transition: filter .1s, opacity .1s;
   width: 100%;
 }
 .ship-pick-image {

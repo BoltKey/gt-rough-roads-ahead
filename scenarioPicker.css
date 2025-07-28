@@ -63,8 +63,10 @@ span[data-id='have-digital-rr'] {
   height: 40px;
 }
 #scenario-picker input[type='checkbox'] {
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
+  min-width: 60px;
+  min-height: 60px;
 }
 
 #scenario-display {
@@ -202,6 +204,45 @@ select {
 .history-settings {
   margin-bottom: 20px;
 }
+
+.setting-wrap {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.setting-icon {
+  width: 60px;
+  height: 60px;
+  min-width: 60px;
+  min-height: 60px;
+  display: inline-block;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.setting-icon.gtships {
+  background-image: url(images/setting-buttons/icon_ship1.webp);
+}
+.setting-icon.gt2ships {
+  background-image: url(images/setting-buttons/icon_ship2.webp);
+}
+.setting-icon.gt3vip {
+  background-image: url(images/setting-buttons/icon_vips.webp);
+}
+.setting-icon.gt3missions {
+  background-image: url(images/setting-buttons/icon_missions.webp);
+}
+.setting-icon.gt2tiles {
+  background-image: url(images/setting-buttons/icon_tiles.webp);
+}
+.setting-icon.gt2adventure {
+  background-image: url(images/setting-buttons/icon_cards.webp);
+}
+.setting-icon.gt2rr {
+  background-image: url(images/setting-buttons/icon_rr.webp);
+}
+
 
 @keyframes spin {
   0% { transform: rotate(0deg); }
