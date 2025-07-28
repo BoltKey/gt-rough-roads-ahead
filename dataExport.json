@@ -21,9 +21,9 @@
       "shipIIIAC": 120,
       "shipIIIAR": 150,
       "GT2 tilesC": 150,
-      "GT2 tilesR": null,
+      "GT2 tilesR": 90,
       "GT2 cardsC": 120,
-      "GT2 cardsR": null
+      "GT2 cardsR": 105
     },
     "Heavy Duty": {
       "MissionGroup": 1,
@@ -42,13 +42,13 @@
       "shipIAC": 150,
       "shipIAR": 150,
       "shipIIAC": 150,
-      "shipIIAR": null,
+      "shipIIAR": 170,
       "shipIIIAC": 150,
-      "shipIIIAR": null,
+      "shipIIIAR": 170,
       "GT2 tilesC": 180,
-      "GT2 tilesR": null,
+      "GT2 tilesR": 120,
       "GT2 cardsC": 150,
-      "GT2 cardsR": null
+      "GT2 cardsR": 135
     },
     "Riding a Powder Keg": {
       "MissionGroup": 2,
@@ -67,13 +67,13 @@
       "shipIAC": 170,
       "shipIAR": 180,
       "shipIIAC": 170,
-      "shipIIAR": null,
+      "shipIIAR": 220,
       "shipIIIAC": 170,
-      "shipIIIAR": null,
+      "shipIIIAR": 240,
       "GT2 tilesC": 200,
-      "GT2 tilesR": null,
+      "GT2 tilesR": 130,
       "GT2 cardsC": 170,
-      "GT2 cardsR": null
+      "GT2 cardsR": 150
     },
     "Radioactive Isotopes": {
       "MissionGroup": 3,
@@ -92,13 +92,13 @@
       "shipIAC": 150,
       "shipIAR": 150,
       "shipIIAC": 150,
-      "shipIIAR": null,
+      "shipIIAR": 190,
       "shipIIIAC": 150,
-      "shipIIIAR": null,
+      "shipIIIAR": 175,
       "GT2 tilesC": 180,
-      "GT2 tilesR": null,
+      "GT2 tilesR": 125,
       "GT2 cardsC": 150,
-      "GT2 cardsR": null
+      "GT2 cardsR": 135
     },
     "Beverage Run": {
       "MissionGroup": 4,
@@ -117,38 +117,38 @@
       "shipIAC": 175,
       "shipIAR": 125,
       "shipIIAC": 175,
-      "shipIIAR": null,
+      "shipIIAR": 175,
       "shipIIIAC": 175,
-      "shipIIIAR": null,
+      "shipIIIAR": 185,
       "GT2 tilesC": 205,
-      "GT2 tilesR": null,
+      "GT2 tilesR": 95,
       "GT2 cardsC": 175,
-      "GT2 cardsR": null
+      "GT2 cardsR": 120
     },
     "Beverage Run (daring)": {
       "MissionGroup": 4,
       "flags": null,
       "frequency": 5,
       "C": 155,
-      "R": 120,
+      "R": 130,
       "VIPC": 215,
       "VIPR": 100,
       "RR 1 cardsC": 170,
-      "RR 1 cardsR": 135,
+      "RR 1 cardsR": 145,
       "RR 2 cardsC": 195,
-      "RR 2 cardsR": 160,
+      "RR 2 cardsR": 175,
       "RR 3 cardsC": 235,
-      "RR 3 cardsR": 185,
+      "RR 3 cardsR": 205,
       "shipIAC": 175,
-      "shipIAR": 130,
+      "shipIAR": 140,
       "shipIIAC": 175,
-      "shipIIAR": null,
+      "shipIIAR": 185,
       "shipIIIAC": 175,
-      "shipIIIAR": null,
+      "shipIIIAR": 195,
       "GT2 tilesC": 205,
-      "GT2 tilesR": null,
+      "GT2 tilesR": 110,
       "GT2 cardsC": 175,
-      "GT2 cardsR": null
+      "GT2 cardsR": 130
     },
     "Cocktail Party": {
       "MissionGroup": 5,
@@ -167,13 +167,13 @@
       "shipIAC": 160,
       "shipIAR": 280,
       "shipIIAC": 160,
-      "shipIIAR": null,
+      "shipIIAR": 310,
       "shipIIIAC": 160,
-      "shipIIIAR": null,
+      "shipIIIAR": 350,
       "GT2 tilesC": 190,
-      "GT2 tilesR": null,
+      "GT2 tilesR": 200,
       "GT2 cardsC": 160,
-      "GT2 cardsR": null
+      "GT2 cardsR": 255
     },
     "Experiments": {
       "MissionGroup": 6,
@@ -192,13 +192,13 @@
       "shipIAC": 190,
       "shipIAR": 175,
       "shipIIAC": 190,
-      "shipIIAR": null,
+      "shipIIAR": 220,
       "shipIIIAC": 190,
-      "shipIIIAR": null,
+      "shipIIIAR": 240,
       "GT2 tilesC": 210,
-      "GT2 tilesR": null,
+      "GT2 tilesR": 140,
       "GT2 cardsC": 190,
-      "GT2 cardsR": null
+      "GT2 cardsR": 155
     },
     "Bundles": {
       "MissionGroup": 7,
@@ -217,13 +217,13 @@
       "shipIAC": 210,
       "shipIAR": 190,
       "shipIIAC": 210,
-      "shipIIAR": null,
+      "shipIIAR": 240,
       "shipIIIAC": 210,
-      "shipIIIAR": null,
+      "shipIIIAR": 260,
       "GT2 tilesC": 230,
-      "GT2 tilesR": null,
+      "GT2 tilesR": 160,
       "GT2 cardsC": 210,
-      "GT2 cardsR": null
+      "GT2 cardsR": 175
     },
     "The Bet": {
       "MissionGroup": 8,
@@ -246,9 +246,9 @@
       "shipIIIAC": 160,
       "shipIIIAR": 200,
       "GT2 tilesC": 190,
-      "GT2 tilesR": null,
+      "GT2 tilesR": 120,
       "GT2 cardsC": 160,
-      "GT2 cardsR": null
+      "GT2 cardsR": 170
     },
     "The Bet (Heavy Armor variant)": {
       "MissionGroup": "8a",
@@ -273,7 +273,7 @@
       "GT2 tilesC": 200,
       "GT2 tilesR": 75,
       "GT2 cardsC": 170,
-      "GT2 cardsR": 75
+      "GT2 cardsR": 155
     },
     "Hilarious Stories (without Supercards)": {
       "MissionGroup": 9,
@@ -290,15 +290,15 @@
       "RR 3 cardsC": 190,
       "RR 3 cardsR": 175,
       "shipIAC": 130,
-      "shipIAR": null,
+      "shipIAR": 130,
       "shipIIAC": 130,
-      "shipIIAR": null,
+      "shipIIAR": 170,
       "shipIIIAC": 130,
-      "shipIIIAR": null,
+      "shipIIIAR": 140,
       "GT2 tilesC": 160,
-      "GT2 tilesR": null,
+      "GT2 tilesR": 80,
       "GT2 cardsC": 130,
-      "GT2 cardsR": null
+      "GT2 cardsR": 110
     },
     "Hilarious Stories (with 1 Supercard)": {
       "MissionGroup": 9,
@@ -315,15 +315,15 @@
       "RR 3 cardsC": 210,
       "RR 3 cardsR": 190,
       "shipIAC": 150,
-      "shipIAR": null,
+      "shipIAR": 130,
       "shipIIAC": 150,
-      "shipIIAR": null,
+      "shipIIAR": 185,
       "shipIIIAC": 150,
-      "shipIIIAR": null,
+      "shipIIIAR": 145,
       "GT2 tilesC": 180,
-      "GT2 tilesR": null,
+      "GT2 tilesR": 85,
       "GT2 cardsC": 150,
-      "GT2 cardsR": null
+      "GT2 cardsR": 125
     },
     "Hilarious Stories (with 2 Supercards)": {
       "MissionGroup": 9,
@@ -340,15 +340,15 @@
       "RR 3 cardsC": 210,
       "RR 3 cardsR": 205,
       "shipIAC": 150,
-      "shipIAR": null,
+      "shipIAR": 130,
       "shipIIAC": 150,
-      "shipIIAR": null,
+      "shipIIAR": 200,
       "shipIIIAC": 150,
-      "shipIIIAR": null,
+      "shipIIIAR": 150,
       "GT2 tilesC": 180,
-      "GT2 tilesR": null,
+      "GT2 tilesR": 90,
       "GT2 cardsC": 150,
-      "GT2 cardsR": null
+      "GT2 cardsR": 140
     },
     "Hilarious Stories (with 3 Supercards)": {
       "MissionGroup": 9,
@@ -365,15 +365,15 @@
       "RR 3 cardsC": 210,
       "RR 3 cardsR": 220,
       "shipIAC": 150,
-      "shipIAR": null,
+      "shipIAR": 130,
       "shipIIAC": 150,
-      "shipIIAR": null,
+      "shipIIAR": 220,
       "shipIIIAC": 150,
-      "shipIIIAR": null,
+      "shipIIIAR": 155,
       "GT2 tilesC": 180,
-      "GT2 tilesR": null,
+      "GT2 tilesR": 95,
       "GT2 cardsC": 150,
-      "GT2 cardsR": null
+      "GT2 cardsR": 160
     },
     "Hilarious Stories (with 4 Supercards)": {
       "MissionGroup": 9,
@@ -390,15 +390,15 @@
       "RR 3 cardsC": 210,
       "RR 3 cardsR": 245,
       "shipIAC": 150,
-      "shipIAR": null,
+      "shipIAR": 130,
       "shipIIAC": 150,
-      "shipIIAR": null,
+      "shipIIAR": 235,
       "shipIIIAC": 150,
-      "shipIIIAR": null,
+      "shipIIIAR": 160,
       "GT2 tilesC": 180,
-      "GT2 tilesR": null,
+      "GT2 tilesR": 100,
       "GT2 cardsC": 150,
-      "GT2 cardsR": null
+      "GT2 cardsR": 175
     },
     "Carpool": {
       "MissionGroup": 10,
@@ -415,15 +415,15 @@
       "RR 3 cardsC": 240,
       "RR 3 cardsR": 225,
       "shipIAC": 180,
-      "shipIAR": null,
+      "shipIAR": 170,
       "shipIIAC": 180,
-      "shipIIAR": null,
+      "shipIIAR": 200,
       "shipIIIAC": 180,
-      "shipIIIAR": null,
+      "shipIIIAR": 190,
       "GT2 tilesC": 210,
-      "GT2 tilesR": null,
+      "GT2 tilesR": 125,
       "GT2 cardsC": 180,
-      "GT2 cardsR": null
+      "GT2 cardsR": 145
     },
     "Easy Peasy": {
       "MissionGroup": 11,
@@ -440,15 +440,15 @@
       "RR 3 cardsC": 200,
       "RR 3 cardsR": 260,
       "shipIAC": 140,
-      "shipIAR": null,
+      "shipIAR": 230,
       "shipIIAC": 140,
-      "shipIIAR": null,
+      "shipIIAR": 250,
       "shipIIIAC": 140,
-      "shipIIIAR": null,
+      "shipIIIAR": 260,
       "GT2 tilesC": 170,
-      "GT2 tilesR": null,
+      "GT2 tilesR": 150,
       "GT2 cardsC": 140,
-      "GT2 cardsR": null
+      "GT2 cardsR": 195
     },
     "Alien Design": {
       "MissionGroup": 12,
@@ -465,15 +465,15 @@
       "RR 3 cardsC": 210,
       "RR 3 cardsR": 230,
       "shipIAC": 150,
-      "shipIAR": null,
+      "shipIAR": 165,
       "shipIIAC": 150,
-      "shipIIAR": null,
+      "shipIIAR": 210,
       "shipIIIAC": 150,
-      "shipIIIAR": null,
+      "shipIIIAR": 170,
       "GT2 tilesC": 180,
-      "GT2 tilesR": null,
+      "GT2 tilesR": 140,
       "GT2 cardsC": 150,
-      "GT2 cardsR": null
+      "GT2 cardsR": 150
     },
     "Diplomatic Mission": {
       "MissionGroup": 13,
@@ -490,15 +490,15 @@
       "RR 3 cardsC": 220,
       "RR 3 cardsR": 200,
       "shipIAC": 160,
-      "shipIAR": null,
+      "shipIAR": 140,
       "shipIIAC": 160,
-      "shipIIAR": null,
+      "shipIIAR": 180,
       "shipIIIAC": 160,
-      "shipIIIAR": null,
+      "shipIIIAR": 170,
       "GT2 tilesC": 190,
-      "GT2 tilesR": null,
+      "GT2 tilesR": 100,
       "GT2 cardsC": 160,
-      "GT2 cardsR": null
+      "GT2 cardsR": 120
     },
     "VIP Mission": {
       "MissionGroup": 14,
@@ -515,15 +515,15 @@
       "RR 3 cardsC": 250,
       "RR 3 cardsR": 220,
       "shipIAC": 190,
-      "shipIAR": null,
+      "shipIAR": 170,
       "shipIIAC": 190,
-      "shipIIAR": null,
+      "shipIIAR": 210,
       "shipIIIAC": 190,
-      "shipIIIAR": null,
+      "shipIIIAR": 230,
       "GT2 tilesC": 220,
-      "GT2 tilesR": null,
+      "GT2 tilesR": 135,
       "GT2 cardsC": 190,
-      "GT2 cardsR": null
+      "GT2 cardsR": 155
     },
     "Final Test": {
       "MissionGroup": 15,
@@ -540,15 +540,15 @@
       "RR 3 cardsC": 350,
       "RR 3 cardsR": 250,
       "shipIAC": 280,
-      "shipIAR": null,
+      "shipIAR": 200,
       "shipIIAC": 280,
-      "shipIIAR": null,
+      "shipIIAR": 220,
       "shipIIIAC": 280,
-      "shipIIIAR": null,
+      "shipIIIAR": 190,
       "GT2 tilesC": 310,
-      "GT2 tilesR": null,
+      "GT2 tilesR": 140,
       "GT2 cardsC": 280,
-      "GT2 cardsR": null
+      "GT2 cardsR": 155
     },
     "Final Test (Transgalactic Trek)": {
       "MissionGroup": 15,
@@ -565,15 +565,15 @@
       "RR 3 cardsC": 350,
       "RR 3 cardsR": 250,
       "shipIAC": 280,
-      "shipIAR": null,
+      "shipIAR": 200,
       "shipIIAC": 280,
-      "shipIIAR": null,
+      "shipIIAR": 220,
       "shipIIIAC": 280,
-      "shipIIIAR": null,
+      "shipIIIAR": 190,
       "GT2 tilesC": 310,
-      "GT2 tilesR": null,
+      "GT2 tilesR": 140,
       "GT2 cardsC": 280,
-      "GT2 cardsR": null
+      "GT2 cardsR": 160
     },
     "Club Gold Trials": {
       "MissionGroup": 16,
@@ -590,15 +590,15 @@
       "RR 3 cardsC": 220,
       "RR 3 cardsR": 230,
       "shipIAC": 160,
-      "shipIAR": null,
+      "shipIAR": 170,
       "shipIIAC": 160,
-      "shipIIAR": null,
+      "shipIIAR": 210,
       "shipIIIAC": 160,
-      "shipIIIAR": null,
+      "shipIIIAR": 180,
       "GT2 tilesC": 190,
-      "GT2 tilesR": null,
+      "GT2 tilesR": 135,
       "GT2 cardsC": 160,
-      "GT2 cardsR": null
+      "GT2 cardsR": 155
     },
     "Club Gold Trials (Transgalactic Trek)": {
       "MissionGroup": 16,
@@ -615,15 +615,15 @@
       "RR 3 cardsC": 230,
       "RR 3 cardsR": 245,
       "shipIAC": 170,
-      "shipIAR": null,
+      "shipIAR": 185,
       "shipIIAC": 170,
-      "shipIIAR": null,
+      "shipIIAR": 230,
       "shipIIIAC": 170,
-      "shipIIIAR": null,
-      "GT2 tilesC": 200,
-      "GT2 tilesR": null,
+      "shipIIIAR": 200,
+      "GT2 tilesC": 210,
+      "GT2 tilesR": 130,
       "GT2 cardsC": 170,
-      "GT2 cardsR": null
+      "GT2 cardsR": 175
     },
     "": {
       "MissionGroup": null,
