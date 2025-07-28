@@ -659,7 +659,7 @@ span.i-icon {
 
 
 .exp-pick-image, .ship-pick-image {
-  filter: grayscale(1);
+  filter: grayscale(0.8);
   transition: filter .1s;
   width: 100%;
 }

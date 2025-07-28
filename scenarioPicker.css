@@ -12,14 +12,14 @@
   font-style: normal;
   font-size: min(24px, 3.5vw);;
   color: white;
-  --gt-accent-color: #0059ff;
-  --gt-text-color: #4c8bff;
-  --gt2-accent-color: #a500ce;
-  --gt2-text-color: #d6a0ff;
-  --gt3-accent-color: #d10549;
-  --gt3-text-color: #ff6b8c;
-  --rr-accent-color: #f0832a;
-  --rr-text-color: #ffb07a;
+  --gt-accent-color: #3478F5;
+  --gt-text-color: #9ABEFF;
+  --gt2-accent-color: #B642F5;
+  --gt2-text-color: #C89CF7;
+  --gt3-accent-color: #F52664;
+  --gt3-text-color: #FFA0BB;
+  --rr-accent-color: #F5913A;
+  --rr-text-color: #F7C48D;
 }
 
 .gt input[type='checkbox']:checked {
@@ -211,7 +211,6 @@ select {
 .contract-ship {
   display: flex;
   align-items: center;
-  font-size: 50px;
   margin-bottom: 20px;
 }
 

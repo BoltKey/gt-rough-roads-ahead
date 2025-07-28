@@ -422,7 +422,7 @@ function setupOptions() {
   gt2Checkbox.addEventListener('change', function(evt) {
     document.getElementById('gt2-options').style.display = evt.target.checked ? 'block' : 'none';
     document.getElementById('gt-options').style.display = evt.target.checked ? 'block' : 'none';
-    evt.target.parentNode.parentNode.querySelectorAll("*").forEach(function(el) {
+    evt.target.parentNode.parentNode.parentNode.querySelectorAll("*").forEach(function(el) {
       if (el.type === "checkbox") {
         el.checked = evt.target.checked;
       }
@@ -430,7 +430,7 @@ function setupOptions() {
   });
   document.getElementById("have-GT3").addEventListener('change', function(evt) {
     document.getElementById('gt3-options').style.display = evt.target.checked ? 'block' : 'none';
-    evt.target.parentNode.parentNode.querySelectorAll("*").forEach(function(el) {
+    evt.target.parentNode.parentNode.parentNode.querySelectorAll("*").forEach(function(el) {
       if (el.type === "checkbox") {
         el.checked = evt.target.checked;
       }
