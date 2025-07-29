@@ -188,8 +188,10 @@ function registerContract(contract, accepted) {
 function registerFlight(flight, accepted, weight) {
   // Register mission
   if (flight.mission && stats.missionStats[flight.mission]) {
+    const missionGroup = dataExport.Missions[flight.mission]?.group;
     Object.keys(stats.missionStats).forEach(missionName => {
-      registerStat(stats.missionStats[missionName], accepted, missionName === flight.mission, weight);
+      const group = dataExport.Missions[missionName]?.group;
+      registerStat(stats.missionStats[missionName], accepted, group === missionGroup, weight);
     });
   }
 
@@ -239,13 +241,15 @@ function applyContractRating(contract, rating) {
   )
   // Define contract elements and their properties
   const elements = [
-    {
-      key: contract.mission && contract.mission !== "<no mission>" ? "mission" : "noMission",
-      stat: contract.mission && contract.mission !== "<no mission>" ? stats.missionStats[contract.mission] : stats.singleNoMissionStats,
-      weight: contract.mission && contract.mission !== "<no mission>" ? ratingConstants.ratingWeight_mission : ratingConstants.ratingWeight_noMission,
-      threshold: contract.mission && contract.mission !== "<no mission>" ? ratingConstants.ratingThreshold_mission : ratingConstants.ratingThreshold_noMission,
-      enabled: true
-    },
+    ...Object.entries(dataExport.Missions).filter(m => m[1].MissionGroup === dataExport.Missions[contract.mission]?.MissionGroup).map(
+      mission => ({
+        key: mission[0],
+        stat: stats.missionStats[mission[0]],
+        weight: ratingConstants.ratingWeight_mission,
+        threshold: ratingConstants.ratingThreshold_mission,
+        enabled: true
+      })
+    ),
     {
       key: contract.vip ? "VIP" : "noVIP",
       stat: contract.vip ? null : stats.noVIPStats,
@@ -871,6 +875,9 @@ function randomContract() {
   }
   else {
     vip = Math.random() < getPc("NoVIPs");
+  }
+  if (mission.flags?.includes("VIP")) {
+    vip = true;  // override everything else
   }
   let roughRoads = 2;
   if (getSetting("have-digital-rr") === "off" && getSetting("gt2-option-rr") === "off") {
