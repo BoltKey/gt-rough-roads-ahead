@@ -263,6 +263,8 @@ select {
   max-width: 90%;
   margin: 0 auto;
   box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  height: 80%;
+  position: relative;
 }
 
 .contract-box .contract-mission,
@@ -284,6 +286,49 @@ select {
   border-radius: 6px;
   margin-top: 10px;
 }
+
+.contract-image {
+  height: 80px;
+  width: 120px;
+  outline: solid red 2px;
+  margin: 10px;
+}
+.ship-name {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #61cffa;
+}
+
+.contract-change-trigger {
+  display: flex;
+  align-items: center;
+}
+.edit-instructions-icon {
+  width: 60px;
+  height: 60px;
+  background-image: url(images/edit-instructions.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: red;
+  margin-right: 10px;
+  display: inline-block;
+}
+.edit-instructions {
+  position: absolute;
+  bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+#contract-complexity {
+  color: yellow;
+}
+
+#contract-roughness {
+  color: orange;
+}
+
 
 .description {
   margin-top: 15px;

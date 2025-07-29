@@ -556,8 +556,9 @@ function updateContract(contract) {
   console.log("Updating contract:", activeContract);
   for (let [targetQuery, inputQuery, content, inputContent] of [
     [".ship-icon-selected, .ship-big-image", ".ship-select", activeContract.ship],
+    [".ship-name", "", activeContract.ship.slice(4)],
     [".mission-name", ".mission-select", activeContract.mission],
-    [".vip-status", ".use-vips", activeContract.vip === undefined ? undefined : (activeContract.vip ? "Play VIPs" : "Don't play VIPs"), contract.vip],
+    [".vip-status", ".use-vips", activeContract.vip === undefined ? undefined : (activeContract.vip ? "Play VIPs." : "Don't play VIPs."), contract.vip],
     [".rr-amount", ".num-rr", activeContract["num-rr"]],
     [".fit-value", "", activeContract.fit?.toFixed(2)],
     [".complexity-value", "", activeContract.complexity],
@@ -673,9 +674,9 @@ function bindButtons() {
       switchPickerScreen(evt.target.dataset.next)
     })
   }
-  for (let button of document.querySelectorAll(".i-button")) {
+  for (let button of document.querySelectorAll(".contract-change-trigger")) {
     button.addEventListener("click", (evt) => {
-      togglePopup(evt.target.dataset.tab)
+      togglePopup(evt.currentTarget.dataset.tab)
     })
   }
   for (let popup of document.querySelectorAll(".close-popup")) {

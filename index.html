@@ -272,82 +272,86 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     </form>
     <div class="picker-screen picker-screen-contract">
       <div class="contract-box">
-        <div class="contract-mission">
-          <span data-id="contract_mission">Play</span>
+        <div class="contract-mission contract-change-trigger" data-tab="mission">
+          <div class="contract-image mission-image"></div>
+          <span data-id="contract_mission">Play </span>
           <span class="mission-name">[mission name]</span>
-          <div class="i-button" data-tab="mission"></div>
-          <div class="popup-wrap popup-mission hidden">
-            <div class="popup">
-              <h2 class="popup-title">Mission detail</h2>
-                <img src="images/missions/[mission image].png" alt="[mission image]">
-                <br>
-                <span class="mission-text">For the detailed rules, find the corresponding page in the mission book.</span>
-              <select name="mission" class="mission-select contract-change">
+          <span>.</span>
+        </div>
+        <div class="popup-wrap popup-mission hidden">
+          <div class="popup">
+            <h2 class="popup-title">Mission detail</h2>
+              <img src="images/missions/[mission image].png" alt="[mission image]">
+              <br>
+              <span class="mission-text">For the detailed rules, find the corresponding page in the mission book.</span>
+            <select name="mission" class="mission-select contract-change">
+            </select>
+            <button class="close-popup">Ok</button>
+          </div>
+        </div>
+        <div class="contract-ship contract-change-trigger" data-tab="ship">
+          <div class="contract-image ship-image"></div>
+          <div data-id="contract_ship">Use <span class="ship-name">[ship name]</span> ship. </div>
+        </div>
+        <div class="popup-wrap popup-ship hidden">
+          <div class="popup">
+            <h2 class="popup-title">Ship</h2>
+            <div class="ship-big-image"></div>
+            <div class="popup-text">
+              <span class="ship-text">[ship description]</span>
+              <select name="ship" class="ship-select contract-change">
+                <option value="shipI">Ship I</option>
+                <option value="shipII">Ship II</option>
+                <option value="shipIII">Ship III</option>
+                <!-- GT2 ship options, only shown when 'use-GT2' is checked -->
+                  <option value="shipIA">Ship IA (Keep on Trucking expansion)</option>
+                  <option value="shipIIA">Ship IIA (Keep on Trucking expansion)</option>
+                  <option value="shipIIIA">Ship IIIA (Keep on Trucking expansion)</option>
               </select>
               <button class="close-popup">Ok</button>
             </div>
           </div>
         </div>
-        <div class="contract-ship">
-          <div data-id="contract_ship">Use this ship: </div>
-          <div class="ship-icon-selected"></div>
-          <div class="i-button" data-tab="ship"></div>
-          <div class="popup-wrap popup-ship hidden">
-            <div class="popup">
-              <h2 class="popup-title">Ship</h2>
-              <div class="ship-big-image"></div>
-              <div class="popup-text">
-                <span class="ship-text">[ship description]</span>
-                <select name="ship" class="ship-select contract-change">
-                  <option value="shipI">Ship I</option>
-                  <option value="shipII">Ship II</option>
-                  <option value="shipIII">Ship III</option>
-                  <!-- GT2 ship options, only shown when 'use-GT2' is checked -->
-                    <option value="shipIA">Ship IA (Keep on Trucking expansion)</option>
-                    <option value="shipIIA">Ship IIA (Keep on Trucking expansion)</option>
-                    <option value="shipIIIA">Ship IIIA (Keep on Trucking expansion)</option>
-                </select>
-                <button class="close-popup">Ok</button>
-              </div>
-            </div>
-          </div>
+        <div class="contract-vips contract-change-trigger" data-tab="vips">
+          <div class="contract-image vips-image"></div>
+          <span class="vip-status">[don't] play VIPs.</span>
         </div>
-        <div class="contract-vips">
-          <span class="vip-status">[don't] play VIPs</span>
-          <div class="i-button" data-tab="vips"></div>
-          <div class="popup-wrap hidden popup-vips">
-            <div class="popup">
-              <h2 class="popup-title">VIPs (Do What?! expansion)</h2>
-                <span class="vips-text">Three randomy chosen VIPs want to fly with you - reveal one VIP card of each color. Also, you start with an extra cabin in the reserve.
-    <br>
-    If a cabin fulfills condition on a VIP card, you may put the corresponding VIP figure to that cabin instead the standard two standard astronauts (each VIP max. once). Effects and rewards of that VIP apply.</span>
-                <br>
-                <input type="checkbox" name="vip" class="use-vips contract-change" checked>
-                <label for="use-vips">Use VIPs</label>
-                <button class="close-popup">Ok</button>
-            </div>
-          </div>
-        </div>
-        <div class="contract-rr">
-          <span data-id="contract_rr">Use <span class="rr-amount">[n]</span> Rough Roads cards</span>
-          <div class="i-button" data-tab="rr"></div>
-          <div class="popup-wrap popup-rr hidden">
-            <div class="popup">
-              <h2 class="popup-title">Rough Roads</h2>
-              <span class="rr-text">You will draw <span class="rr-amount">[n]</span> Rough Roads cards from the Rough Roads deck. You may reveal them at any time during the game, but only after you complete all other steps.</span>
+        <div class="popup-wrap hidden popup-vips">
+          <div class="popup">
+            <h2 class="popup-title">VIPs (Do What?! expansion)</h2>
+              <span class="vips-text">Three randomy chosen VIPs want to fly with you - reveal one VIP card of each color. Also, you start with an extra cabin in the reserve.
+  <br>
+  If a cabin fulfills condition on a VIP card, you may put the corresponding VIP figure to that cabin instead the standard two standard astronauts (each VIP max. once). Effects and rewards of that VIP apply.</span>
               <br>
-              <label for="num-rr">Use</label>
-              <input type="number" class="num-rr contract-change" name="num-rr" value="1" min="0" max="3"/>
-              <label for="num-rr">Rough Roads cards.</label><br>
-              <input type="checkbox" name="digital-rr" class="digital-rr contract-change" checked>
-              <label for="digital-rr">Use digital Rough Roads</label>
+              <input type="checkbox" name="vip" class="use-vips contract-change" checked>
+              <label for="use-vips">Use VIPs</label>
               <button class="close-popup">Ok</button>
-            </div>
           </div>
-        <div class="description">
-          (This contract is <span id="contract-complexity">[complex]</span> and is <span id="contract-roughness">[rough]</span>)
         </div>
-      </div>
+        <div class="contract-rr contract-change-trigger" data-tab="rr">
+          <div class="contract-image rr-image"></div>
+          <span data-id="contract_rr">Use <span class="rr-amount">[n]</span> Rough Roads cards.</span>
+        </div>
+        <div class="popup-wrap popup-rr hidden">
+          <div class="popup">
+            <h2 class="popup-title">Rough Roads</h2>
+            <span class="rr-text">You will draw <span class="rr-amount">[n]</span> Rough Roads cards from the Rough Roads deck. You may reveal them at any time during the game, but only after you complete all other steps.</span>
+            <br>
+            <label for="num-rr">Use</label>
+            <input type="number" class="num-rr contract-change" name="num-rr" value="1" min="0" max="3"/>
+            <label for="num-rr">Rough Roads cards.</label><br>
+            <input type="checkbox" name="digital-rr" class="digital-rr contract-change" checked>
+            <label for="digital-rr">Use digital Rough Roads</label>
+            <button class="close-popup">Ok</button>
+          </div>
+        </div>
+        <div class="description">
+          This contract is <span id="contract-complexity">[complex]</span> and is <span id="contract-roughness">[rough]</span>
+        </div>
+        <div class="edit-instructions">
+          <div class="edit-instructions-icon"></div>
+          <span class="localizable">Tap any element to see its details or change it.</span>
+        </div>
     </div>
     <div class="navigation-wrap">
       <button class="contract-navigation" data-next="3">
