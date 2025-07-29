@@ -876,7 +876,7 @@ function randomContract() {
   else {
     vip = Math.random() < getPc("NoVIPs");
   }
-  if (mission.flags?.includes("VIP")) {
+  if (mission.props.flags?.includes("VIP")) {
     vip = true;  // override everything else
   }
   let roughRoads = 2;
