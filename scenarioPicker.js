@@ -824,7 +824,7 @@ function randomContract() {
   }
   const pickedFlight = possibleLevels[Math.floor(Math.random() * possibleLevels.length)];
   const noMission = getSetting("gt2-option-missions") === "off";
-  const missions = Object.entries(dataExport.Missions).filter(m => !m[1].flags?.includes("not" + pickedFlight)).map(m => {
+  const missions = Object.entries(dataExport.Missions).filter(m => !m[1].flags?.includes("not" + pickedFlight) && !m[1].flags?.includes("trek")).map(m => {
     return {
       name: m[0],
       props: m[1]
