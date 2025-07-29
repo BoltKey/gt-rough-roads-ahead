@@ -555,10 +555,11 @@ function updateContract(contract) {
   addAttrsToContract(activeContract);
   console.log("Updating contract:", activeContract);
   for (let [targetQuery, inputQuery, content, inputContent] of [
-    [".ship-icon-selected, .ship-big-image", ".ship-select", activeContract.ship],
+    [".ship-icon-selected, .ship-big-image, .ship-image", ".ship-select", activeContract.ship],
     [".ship-name", "", activeContract.ship.slice(4)],
     [".mission-name", ".mission-select", activeContract.mission],
-    [".vip-status", ".use-vips", activeContract.vip === undefined ? undefined : (activeContract.vip ? "Play VIPs." : "Don't play VIPs."), contract.vip],
+    [".mission-image", "", dataExport.Missions[activeContract.mission]?.MissionGroup],
+    [".vip-status", ".use-vips", activeContract.vip === undefined ? undefined : (activeContract.vip ? "Play" : "Don't play"), contract.vip],
     [".rr-amount", ".num-rr", activeContract["num-rr"]],
     [".fit-value", "", activeContract.fit?.toFixed(2)],
     [".complexity-value", "", activeContract.complexity],
@@ -571,6 +572,12 @@ function updateContract(contract) {
     }
     if (inputContent === undefined) {
       inputContent = content;
+    }
+    if (targetQuery === ".mission-image") {
+      document.querySelectorAll(targetQuery).forEach(el => {
+        el.dataset.mission = content;
+      });
+      continue;
     }
     if (inputQuery === ".ship-select") {
       document.querySelectorAll(targetQuery).forEach(el => {
@@ -592,10 +599,10 @@ At the start of the flight, roll a die to determine which direction will be the 
       let textContent = content;
       if (targetQuery === ".mission-name") {
         if (textContent === "<no mission>") {
-          textContent = "no mission";
+          textContent = "no";
         }
         else {
-          textContent = "mission " + content;
+          textContent = content;
         }
       }
       document.querySelectorAll(targetQuery).forEach(el => {
@@ -618,6 +625,9 @@ At the start of the flight, roll a die to determine which direction will be the 
   for (let instruction of document.querySelectorAll(".instructions")) {
     instruction.classList.add("hidden");
   }
+  document.querySelector(".contract-rr").classList.toggle("unselected", !activeContract["num-rr"]);
+  document.querySelector(".contract-vips").classList.toggle("unselected", !activeContract.vip);
+  document.querySelector(".contract-mission").classList.toggle("unselected", activeContract.mission === "<no mission>");
   for (let instruction of ["ship", "mission", "vip", "num-rr"]) {
     let query = `.${instruction}-instructions`;
     if (instruction === "ship") {

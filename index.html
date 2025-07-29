@@ -273,10 +273,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <div class="picker-screen picker-screen-contract">
       <div class="contract-box">
         <div class="contract-mission contract-change-trigger" data-tab="mission">
-          <div class="contract-image mission-image"></div>
-          <span data-id="contract_mission">Play </span>
+          <div class="contract-image-wrap">
+            <div class="contract-image mission-image">
+            </div>
+            <div class="contract-image-setting"></div>
+          </div>
+          <span data-id="contract_mission">Play&nbsp</span>
           <span class="mission-name">[mission name]</span>
-          <span>.</span>
+          <span>&nbsp;mission.</span>
         </div>
         <div class="popup-wrap popup-mission hidden">
           <div class="popup">
@@ -290,7 +294,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           </div>
         </div>
         <div class="contract-ship contract-change-trigger" data-tab="ship">
-          <div class="contract-image ship-image"></div>
+          <div class="contract-image-wrap">
+            <div class="contract-image ship-image">
+            </div>
+            <div class="contract-image-setting"></div>
+          </div>
           <div data-id="contract_ship">Use <span class="ship-name">[ship name]</span> ship. </div>
         </div>
         <div class="popup-wrap popup-ship hidden">
@@ -313,8 +321,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           </div>
         </div>
         <div class="contract-vips contract-change-trigger" data-tab="vips">
-          <div class="contract-image vips-image"></div>
-          <span class="vip-status">[don't] play VIPs.</span>
+          <div class="contract-image-wrap">
+            <div class="contract-image vips-image">
+            </div>
+            <div class="contract-image-setting"></div>
+          </div>
+          <span class="vip-status">[don't] play</span> <span class="vip-name">&nbsp;VIPs.</span>
         </div>
         <div class="popup-wrap hidden popup-vips">
           <div class="popup">
@@ -329,8 +341,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           </div>
         </div>
         <div class="contract-rr contract-change-trigger" data-tab="rr">
-          <div class="contract-image rr-image"></div>
-          <span data-id="contract_rr">Use <span class="rr-amount">[n]</span> Rough Roads cards.</span>
+          <div class="contract-image-wrap">
+            <div class="contract-image rr-image">
+            </div>
+            <div class="contract-image-setting"></div>
+          </div>
+          <span data-id="contract_rr">Use <span class="rr-amount">[n]</span> <span class="rr-name">Rough Roads</span> cards.</span>
         </div>
         <div class="popup-wrap popup-rr hidden">
           <div class="popup">
@@ -357,10 +373,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <button class="contract-navigation" data-next="3">
         Previous step
       </button>
-      <button class="contract-navigation" data-next="loading">
+      <button class="contract-navigation button-decline" data-next="loading">
         Decline
       </button>
-      <button class="contract-navigation" data-next="launch">
+      <button class="contract-navigation button-accept" data-next="launch">
         Accept
       </button>
     </div>
