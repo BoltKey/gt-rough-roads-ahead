@@ -22,8 +22,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 
 <script type="text/javascript" src='libs/nosleep.js' async></script>
+<link href="https://cdn.jsdelivr.net/npm/nouislider@15.7.0/dist/nouislider.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/nouislider@15.7.0/dist/nouislider.min.js"></script>
 <script type="text/javascript" src='main.js' async></script>
+<script type="module" src='scenarioPicker.js'></script>
 <script type="text/javascript" src='strings.js' async></script>
+<script type="text/javascript" src='missionData/missionTexts.js' async></script>
 
 <link rel="apple-touch-icon" sizes="180x180" href="images/favicons/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="images/favicons/favicon-32x32.png">
@@ -31,25 +35,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="manifest" href="/site.webmanifest">
 <link rel="mask-icon" href="images/favicons/safari-pinned-tab.svg" color="#5bbad5">
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="scenarioPicker.css">
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
-<meta name="viewport" 
+<meta name="viewport"
       content="user-scalable=0">
 
 <link rel="stylesheet" href="https://use.typekit.net/jxs2fts.css">
 <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
 </head>
 
-<script defer src="https://apis.google.com/js/api.js"
-  onload="this.onload=function(){};handleClientLoad()"
-  onreadystatechange="if (this.readyState === 'complete') this.onload()">
-</script>
+
 <body>
 	<!-- Google Tag Manager (noscript) -->
 	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MSFHW64"
 	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	<!-- End Google Tag Manager (noscript) -->
-	
+
 	<!--<div id="turn-portrait">Landscape orientation not supported - turn your device 90 degrees please</div>-->
 	<div id='title-page'>
 		<div id="loading" style="margin: auto; color: #38acc9; font-size: 40px; text-align: center; z-index: 550; position: absolute; top: 50%; width: 100%; font-size: 300%; font-family:orgovan-rounded-web, sans-serif;">Loading...</div>
@@ -71,13 +73,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <div class='lang-select ru' data-lang="ru"></div>
   </div>
 	<div id='top-bar'>
-		<div id='logo'> Rough Roads
+    <div id="scenario-picker-logo" class="navigator-tab localizable" data-id="scenario_picker_name">Scenario Picker</div>
+		<div id='rr-logo' class="navigator-tab active"> Rough Roads
 		</div>
+    <div id='topbar-separator'></div>
     <div id='lang-select'></div>
 		<!--<a href="https://cge.as/" id='cge-logo' target=”_blank”>-->
-		
+
 	</div>
-	<div id='card-area'>
+	<div id='rough-roads-deck' class="active tab">
 		<div id="draw-number"></div>
 		<div id="discard-number"></div>
 		<div id="button-wrap"></div>
@@ -86,13 +90,336 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 				<h1></h1>
 				<h2></h2>
 				<div></div>
-				
+
 				<div></div>
-				
+
 				<div></div>
 				<div class='footnote'></div>
 			</div>
 		</div>
 		<div class='card-back' style='display: none'></div>
 	</div>
+  <div id="scenario-picker" class="tab">
+    <div id="scenario-picker-welcome" class="picker-screen picker-screen-1 instructions">
+      Hello truckers. If you own few of expansions, you may know this problem - which flight should we try? Which ship? Which mission to use? Should we include VIP passengers? Or, even some Rough Roads? So many choices!
+      <br>
+      This is why we are here. Right from the Corporation, Inc., a shining brand new contract generator. Just give us your preferences, and we will generate a game setup just for you! Don't like that contract? Ask for another, until you are happy. And then, enjoy the classic cozy explosive experience, as always.
+      <br>
+      To help us perserve your preferences, it is recommended to store history of your contracts:
+      <form id="store-form">
+        <input type="radio" name="storage" checked data-id="store_history_device"></input>
+        <label for="store_history_device">Store the history on this device</label>
+        <br>
+        <input type="radio" name="storage" data-id="do_not_store_history"></input>
+        <label for="do_not_store_history">Do not store the history</label>
+        <br>
+        <div class="navigation-wrap">
+          <input type="button" name="continue" data-next="2" value="Continue" data-id="continue"></input>
+        </div>
+      </form>
+    </div>
+    <form id="expansion-form" class="picker-screen picker-screen-2">
+
+      <div class="localizable instructions" data-id="have-expansion">To know what we can pick from, please select what expansions you own and which parts to include:</label>
+      </div>
+      <div id="expansion-picker-wrap">
+        <div class="exp-pick-wrap gt">
+          <div class="exp-pick-image-wrap">
+            <label for="have-GT">
+              <img id="have-GT-img" class="exp-pick-image picked" src="images/box-images/GTbox.webp">
+              <input type="checkbox" id="have-GT" disabled checked>
+              <span data-id="have-GT" class="have-expansion">We have the base game.</span>
+            </label>
+          </div>
+          <div id="gt-options" style="display: none; margin-left: 20%;">
+            <div class="setting-icon gtships"></div>
+            <input type="checkbox" id="gt-option-ships" checked>
+            <label for="gt-option-ships"><span>Include the base ships</span></label><br>
+          </div>
+        </div>
+        <div class="exp-pick-wrap gt2">
+          <div class="exp-pick-image-wrap">
+            <label for="have-GT2">
+              <img id="have-GT2-img" class="exp-pick-image" src="images/box-images/GT2box.webp">
+              <input type="checkbox" id="have-GT2">
+              <span data-id="have-GT2" class="have-expansion">We have the Keep on Trucking expansion.</span>
+            </label>
+          </div>
+          <div id="gt2-options" style="display: none; margin-left: 20%;">
+            <div class="setting-wrap">
+              <div class="setting-icon gt2ships"></div>
+              <input type="checkbox" id="gt2-option-ships">
+              <label for="gt2-option-ships"><span>Include the new ships.</span></label>
+            </div>
+            <br>
+            <div class="setting-wrap">
+              <div class="setting-icon gt2tiles"></div>
+              <input type="checkbox" id="gt2-option-tiles">
+              <label for="gt2-option-tiles"><span>Include the new tiles.</span></label>
+            </div>
+            <br>
+            <div class="setting-wrap">
+              <div class="setting-icon gt2adventure"></div>
+              <input type="checkbox" id="gt2-option-adventure-cards">
+              <label for="gt2-option-adventure-cards"><span>Include the new adventure cards.</span></label>
+            </div>
+            <br>
+            <div class="setting-wrap">
+              <div class="setting-icon gt2rr"></div>
+              <input type="checkbox" id="gt2-option-rr">
+              <label for="gt2-option-rr"><span>Include the Rough Roads physical cards.</span></label>
+            </div>
+          </div>
+        </div>
+        <div class="exp-pick-wrap gt3">
+          <div class="exp-pick-image-wrap">
+            <label for="have-GT3">
+              <img id="have-GT3-img" class="exp-pick-image" src="images/box-images/GT3box.webp">
+              <input type="checkbox" id="have-GT3">
+              <span data-id="have-GT3" class="have-expansion">We have the Do What?! expansion.</span>
+            </label>
+          </div>
+          <div id="gt3-options" style="display: none; margin-left: 20%;">
+            <div class="setting-wrap">
+              <div class="setting-icon gt3missions"></div>
+              <input type="checkbox" id="gt2-option-missions">
+              <label for="gt2-option-missions"><span>Include the missions.</span></label>
+            </div>
+            <br>
+            <div class="setting-wrap">
+              <div class="setting-icon gt3vip"></div>
+              <input type="checkbox" id="gt2-option-vip">
+              <label for="gt2-option-vip"><span>Include the VIPs.</span></label>
+            </div>
+          </div>
+        </div>
+        <div class="exp-pick-wrap rr">
+          <div class="exp-pick-image-wrap">
+            <label for="have-digital-rr">
+              <img id="have-digital-rr-img" class="exp-pick-image" src="images/box-images/RRbox.webp">
+              <input type="checkbox" id="have-digital-rr">
+              <span data-id="have-digital-rr" class="have-expansion">Include the web version of Rough Roads.</span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="navigation-wrap">
+        <input type="button" name="continue" data-next="1" value="Previous Step" data-id="previous_step"></input>
+        <input type="button" name="continue" data-next="3" value="Continue" data-id="continue"></input>
+      </div>
+    </form>
+    <form data-id="game-mode-form" class="picker-screen picker-screen-3">
+      <div class="localizable instructions" data-id="game_mode_instructions">Perfect. So, what do you feel like playing now?</div>
+      <input type="checkbox" name="flight-level" id="level-1"  checked>
+      <label for="level-1" class="radio-label localizable" data-id="level_1">Level 1 Flight</label>
+      <br>
+      <input type="checkbox" name="flight-level" id="level-2" >
+      <label for="level-2" class="radio-label localizable" data-id="level_2">Level 2 Flight</label>
+      <br>
+      <input type="checkbox" name="flight-level" id="level-3" >
+      <label for="level-3" class="radio-label localizable" data-id="level_3">Level 3 Flight</label>
+      <!--<br>
+      <input type="checkbox" name="flight-level" id="level-trek">
+      <label for="level-trek" class="radio-label localizable" data-id="level_trek">Transgalactic Trek (all three flights)</label>-->
+      <br>
+
+      <div class="complexity">
+        <label for="complexity-min" class="localizable" data-id="complexity_min">Complexity:
+        </label>
+        <div class="double-range-wrap">
+          <div id="complexity" data-attr="complexity"></div>
+        </div>
+          <div id="complexity-values" class="slider-label" style="margin-left:16px;"></div>
+      </div>
+      <div class="roughness">
+        <label for="roughness-min" class="localizable" data-id="roughness_min">Roughness:
+        </label>
+        <div class="double-range-wrap">
+          <div id="roughness" data-attr="roughness"></div>
+        </div>
+          <div id="roughness-values" class="slider-label" style="margin-left:16px;"></div>
+      </div>
+      <div class="history-settings" style="display: none;">
+        <select name="history" id="history-offered-weight" class="history-select">
+          <option value="0">Don't take in account</option>
+          <option value="1">Slightly prefer</option>
+          <option value="2" selected>Prefer</option>
+          <option value="3">Strongly prefer</option>
+        </select> <label> what I have not been offered recently.</label>
+        <br>
+        <select name="history" id="history-accepted-weight" class="history-select">
+          <option value="0">Don't take in account</option>
+          <option value="1">Slightly prefer</option>
+          <option value="2" selected>Prefer</option>
+          <option value="3">Strongly prefer</option>
+        </select> <label> what I have not played recently.
+        <br>
+        <select name="history" id="history-rating-weight" class="history-select">
+          <option value="0">Don't take in account</option>
+          <option value="1">Slightly take in account</option>
+          <option value="2" selected>Take in account</option>
+          <option value="3">Strongly take in account</option>
+        </select> what I liked or disliked in the past.
+        <br>
+      </div>
+      <script>
+
+      </script>
+      <div class="navigation-wrap">
+        <input type="button" name="continue" data-next="2" value="Previous Step" data-id="previous_step"></input>
+        <input type="button" name="continue" data-next="loading" value="Offer me a contract" data-id="continue"></input>
+      </div>
+    </form>
+    <div class="picker-screen picker-screen-contract">
+      <div class="contract-box">
+        <div class="contract-mission contract-change-trigger" data-tab="mission">
+          <div class="contract-image-wrap">
+            <div class="contract-image mission-image">
+            </div>
+            <div class="contract-image-setting"></div>
+          </div>
+          <span data-id="contract_mission">Play&nbsp</span>
+          <span class="mission-name">[mission name]</span>
+          <span>&nbsp;mission.</span>
+        </div>
+        <div class="popup-wrap popup-mission hidden">
+          <div class="popup">
+            <h2 class="popup-title">Mission detail</h2>
+              <img src="images/missions/[mission image].png" alt="[mission image]">
+              <br>
+              <span class="mission-text">For the detailed rules, find the corresponding page in the mission book.</span>
+            <select name="mission" class="mission-select contract-change">
+            </select>
+            <button class="close-popup">Ok</button>
+          </div>
+        </div>
+        <div class="contract-ship contract-change-trigger" data-tab="ship">
+          <div class="contract-image-wrap">
+            <div class="contract-image ship-image">
+            </div>
+            <div class="contract-image-setting"></div>
+          </div>
+          <div data-id="contract_ship">Use <span class="ship-name">[ship name]</span> ship. </div>
+        </div>
+        <div class="popup-wrap popup-ship hidden">
+          <div class="popup">
+            <h2 class="popup-title">Ship</h2>
+            <div class="ship-big-image"></div>
+            <div class="popup-text">
+              <span class="ship-text">[ship description]</span>
+              <select name="ship" class="ship-select contract-change">
+                <option value="shipI">Ship I</option>
+                <option value="shipII">Ship II</option>
+                <option value="shipIII">Ship III</option>
+                <!-- GT2 ship options, only shown when 'use-GT2' is checked -->
+                  <option value="shipIA">Ship IA (Keep on Trucking expansion)</option>
+                  <option value="shipIIA">Ship IIA (Keep on Trucking expansion)</option>
+                  <option value="shipIIIA">Ship IIIA (Keep on Trucking expansion)</option>
+              </select>
+              <button class="close-popup">Ok</button>
+            </div>
+          </div>
+        </div>
+        <div class="contract-vips contract-change-trigger" data-tab="vips">
+          <div class="contract-image-wrap">
+            <div class="contract-image vips-image">
+            </div>
+            <div class="contract-image-setting"></div>
+          </div>
+          <span class="vip-status">[don't] play</span> <span class="vip-name">&nbsp;VIPs.</span>
+        </div>
+        <div class="popup-wrap hidden popup-vips">
+          <div class="popup">
+            <h2 class="popup-title">VIPs (Do What?! expansion)</h2>
+              <span class="vips-text">Three randomy chosen VIPs want to fly with you - reveal one VIP card of each color. Also, you start with an extra cabin in the reserve.
+  <br>
+  If a cabin fulfills condition on a VIP card, you may put the corresponding VIP figure to that cabin instead the standard two standard astronauts (each VIP max. once). Effects and rewards of that VIP apply.</span>
+              <br>
+              <input type="checkbox" name="vip" class="use-vips contract-change" checked>
+              <label for="use-vips">Use VIPs</label>
+              <button class="close-popup">Ok</button>
+          </div>
+        </div>
+        <div class="contract-rr contract-change-trigger" data-tab="rr">
+          <div class="contract-image-wrap">
+            <div class="contract-image rr-image">
+            </div>
+            <div class="contract-image-setting"></div>
+          </div>
+          <span data-id="contract_rr">Use <span class="rr-amount">[n]</span> <span class="rr-name">Rough Roads</span> cards.</span>
+        </div>
+        <div class="popup-wrap popup-rr hidden">
+          <div class="popup">
+            <h2 class="popup-title">Rough Roads</h2>
+            <span class="rr-text">You will draw <span class="rr-amount">[n]</span> Rough Roads cards from the Rough Roads deck. You may reveal them at any time during the game, but only after you complete all other steps.</span>
+            <br>
+            <label for="num-rr">Use</label>
+            <input type="number" class="num-rr contract-change" name="num-rr" value="1" min="0" max="3"/>
+            <label for="num-rr">Rough Roads cards.</label><br>
+            <input type="checkbox" name="digital-rr" class="digital-rr contract-change" checked>
+            <label for="digital-rr">Use digital Rough Roads</label>
+            <button class="close-popup">Ok</button>
+          </div>
+        </div>
+        <div class="description">
+          This contract is <span id="contract-complexity">[complex]</span> and is <span id="contract-roughness">[rough]</span>
+        </div>
+        <div class="edit-instructions">
+          <div class="edit-instructions-icon"></div>
+          <span class="localizable">Tap any element to see its details or change it.</span>
+        </div>
+    </div>
+    <div class="navigation-wrap">
+      <button class="contract-navigation" data-next="3">
+        Previous step
+      </button>
+      <button class="contract-navigation button-decline" data-next="loading">
+        Retry
+      </button>
+      <button class="contract-navigation button-accept" data-next="launch">
+        Accept
+      </button>
+    </div>
+    </div>
+    <div class="picker-screen picker-screen-launch">
+      <div class='mission-instructions'>Find and read the <span class="mission-name">[mission name]</span> mission, so everyone understands it. <span class="variant-text"></span><br>
+      </div>
+      <div>
+        Everyone takes the following ship: <br> <div class="ship-icon-selected"></div>
+      </div>
+      <span class='shipIIIA-instructions instructions'>Make sure everyone understands the space bending.</span><br>
+      <div class='mission-instructions'>
+        Everyone gets <span class="credits-amt">[credits]</span> credits (because you are playing a mission).<br>
+      </div>
+      <span class="vip-instructions">Everyone gets a rainbow cabin (because you are playing with VIPs). Reveal one VIP card of each color.</span><br>
+      <span class="num-rr-instructions">Once you complete all other steps reveal <span class="rr-amount">[n]</span> Rough Roads cards<span class="digital-rr-instructions"> in the <button class="digital-rr-button">Digital Rough Roads</button> tab.</span></span><br>
+      <br>
+      <div class='bonvoyage'>Bon Voyage!</div>
+      <br>
+      <div class="navigation-wrap">
+        <button class="contract-navigation" data-next="3">Abandon Contract</button>
+        <button class="contract-navigation" data-next="flight-done">Flight Done</button>
+      </div>
+    </div>
+    <div class="picker-screen picker-screen-loading">
+      Creating contract...
+      <div class="loading-spinner"></div>
+    </div>
+    <div class="picker-screen picker-screen-flight-done">
+      <h2>Thank you for participating in our Contract program!</h2>
+      <div class="flight-done-text localizable" data-id="flight_done_text">
+        How did your group enjoy this particular contract? Please rate whether it was fun, not whether you made tons of credits or ended up floating in space on a toilet seat.
+  <br>
+        The answer may affect whether you will get similar contracts in the future, and also helps Corporation, Inc. to improve the contract generator and the game.
+        <br>
+        <button class="rating-button" data-rating="-2"></button>
+        <button class="rating-button" data-rating="-1"></button>
+        <button class="rating-button" data-rating="0"></button>
+        <button class="rating-button" data-rating="1"></button>
+        <button class="rating-button" data-rating="2"></button>
+      </div>
+      <br>
+      <button class="close-button" id="rating-confirm">Confirm</button>
+    </div>
+  </div>
 </body>

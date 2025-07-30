@@ -1,4 +1,4 @@
-const strings = 
+const strings =
 {
   "Cards": {
     "": {
@@ -1418,6 +1418,19 @@ const strings =
       "string_pl": null,
       "string_ro": null,
       "string_ru": "Ухабистый космос"
+    },
+    "scenario_picker_name": {
+      "string_en": "Contract Picker",
+      "string_de": "Contract Picker",
+      "string_cs": "Contract Picker",
+      "string_es": null,
+      "string_fr": null,
+      "string_it": null,
+      "string_jp": null,
+      "string_ko": null,
+      "string_pl": null,
+      "string_ro": null,
+      "string_ru": null
     }
   }
 }

@@ -28,8 +28,8 @@ h1, h2 {
 	font-family: orgovan-rounded-web, sans-serif;
 	font-weight: 400;
 	font-style: normal;
-  
-  
+
+
 }
 
 element {
@@ -43,7 +43,7 @@ element {
     transition: opacity 1s;
     opacity: 1;
     position: absolute;
-    z-index: 500;
+    z-index: 700;
     overflow: hidden;
 }
 #title-page button {
@@ -66,7 +66,7 @@ div#title-bottom {
     align-items: center;
 }
 #title-ship {
-    background: url(images/ship-title.png);
+    background: url(images/ship-title.webp);
     width: 200%;
     left: -50%;
     position: absolute;
@@ -97,24 +97,36 @@ div#title-bottom {
   /* border-bottom: solid #b18a76ba 5px; */
   position: relative;
   background-size: 100% 100%;
-	overflow: hidden;
+  text-align: center;
+  font-size: min(5vw, 42px);
+  font-family: orgovan-rounded-web, sans-serif;
+  display: flex;
+  align-items: center;
 }
 
-#top-bar #logo {
-    top: 50%;
-    left: 50%;
-    position: absolute;
-    width: 100%;
-    transform: translate(-50%, -50%);
+#top-bar > * {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 600;
+}
+
+
+#top-bar #scenario-picker-logo {
+  width: 20%;
+  height: 100%;
+  flex-grow: 2;
+}
+
+#top-bar #rr-logo {
     /* background-image: url(images/logo-en.png); */
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
-    text-align: center;
-    font-size: 400%;
-    font-family: orgovan-rounded-web, sans-serif;
+    flex-grow: 2;
+  height: 100%;
 	color: #221A42;
-  pointer-events: none;
+
 }
 
 #lang-select-wrap#lang-select-wrap {
@@ -135,7 +147,7 @@ div#title-bottom {
 }
 #lang-select-wrap#lang-select-wrap.visible {
   transform: translate(0%, 0);
-  z-index: 600;
+  z-index: 650;
   right: 5%;
 }
 
@@ -153,9 +165,8 @@ div#title-bottom {
 #lang-select {
     height: 60%;
     right: 10%;
-    transform: translate(0, 35%);
-    position: absolute;
     z-index: 500;
+    display: inline-block;
 }
 .lang-select.de {
   background-image: url(images/flag-de.png);
@@ -179,9 +190,6 @@ div#title-bottom {
   background-image: url(images/flag-ru.png);
 }
 
-.landscape #top-bar #logo {
-	font-size: 300%;
-}
 
 #cge-logo {
     height: 9em;
@@ -215,7 +223,7 @@ div#title-bottom {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
- 
+
 }
 
 #draw-number {
@@ -241,17 +249,43 @@ div#draw-number.no-cards {
 	user-select: none;
 }
 
-#card-area {
-	position: relative;
+.tab {
+	position: absolute;
 	height: 90%;
+  width: 100%;
+  top: 10%;
 	overflow: hidden;
+  left: -100%;
+  transition: left 0.4s;
+  float: left;
 }
+
+.tab.active {
+  left: 0%;
+}
+.tab#rough-roads-deck:not(.active) {
+  left: 100%;
+}
+.navigator-tab.active {
+  background-color: #FFFF9F;
+}
+
+.navigator-tab {
+  transition: background-color .2s;
+}
+
+#topbar-separator {
+  width: 2px;
+  height: 100%;
+  background-color: #FFFF9F;
+}
+
 
 .card-wrap {
 	filter: drop-shadow(2px 4px 6px black);
 	-webkit-transform-style: preserve-3d;
-	
-	transition: transform 1s, opacity .5s, left 1s, top 1s, filter .3s;
+
+	transition: transform 0.4s, opacity .5s, left 0.4s, top 0.4s, filter .3s;
 	position: absolute;
 }
 
@@ -372,7 +406,7 @@ li .ship-icon {
 	transform: rotateY(180deg);
 }
 
-button {
+button, input[type='submit'], input[type='button'] {
     position: absolute;
     font-size: 30px;
     padding: 17px;
@@ -433,7 +467,7 @@ button:hover {
     padding: 0;
 }
 .i-button {
-	
+
 }
 button.hidden {
     opacity: 0.5;
@@ -461,23 +495,19 @@ button.hidden {
 }
 
 
-#help-text, .help-text, #lang-select-wrap {
+#help-text, .help-text, #lang-select-wrap, .popup {
     color: white;
     background: rgb(9 41 72 / 87%);
     border: solid 4px rgba(59, 97, 168, 1);
     border-radius: 20px;
-    /* padding: 2vw; */
     position: absolute;
-    /* top: 25px; */
     font-size: min(24px, 3.5vw);
-    /* margin: 6%; */
     top: 6%;
     left: 6%;
     opacity: 1;
     transition: opacity .5s, left .5s;
     z-index: 220;
     max-height: 88%;
-    /* height: 88%; */
     width: 88%;
     overflow: auto;
 }
@@ -503,10 +533,14 @@ button.hidden {
 .help-text * {
     text-align: left;
 }
-:is(#help-text, #help-wrap).visible {
+:is(#help-text, #help-wrap, .popup-wrap).visible {
 	opacity: 1;
 	pointer-events: all;
 	left: 0;
+}
+.popup :not(label) {
+  font-size: 150%;
+  /* I have no idea what I am doing here */
 }
 #help-text * {
 	text-align: center;
@@ -532,26 +566,26 @@ button.hidden {
     padding: 0 5%;
 }
 
-#help-wrap {
+#help-wrap, .popup-wrap {
 	width: 100%;
-    height: 100%;
-    background: rgba(30, 40, 100, 0.8);
-    z-index: 450;
-    position: absolute;
-	opacity: 0;
+  height: 100%;
+  background: rgba(30, 40, 100, 0.8);
+  z-index: 450;
+  position: absolute;
 	pointer-events: none;
 	transition: opacity .5s, left .5s;
-	left: 150%;
 }
 
+#help-wrap {
+  opacity: 0;
+  left: 150%;
+}
+
+
 button#help-button {
-    position: absolute;
     padding: 7px 23px;
     /* background: #6262d3; */
     z-index: 201;
-    top: 50%;
-    transform: translate(0, -50%);
-    right: 1%;
     margin: auto auto;
     font-size: 4em;
     background-image: url(images/i-button.png);
@@ -562,6 +596,7 @@ button#help-button {
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
+    position: relative;
 }
 
 button.i-button {
@@ -617,6 +652,26 @@ span.i-icon {
     font-size: 300%;
     font-family: 'orgovan-rounded-web';
 }
+
+
+
+.exp-pick-image, .ship-pick-image {
+  filter: grayscale(0.8);
+  opacity: 0.8;
+  transition: filter .1s, opacity .1s;
+  width: 100%;
+}
+.ship-pick-image {
+  opacity: 0.5;
+}
+.ship-pick-image {
+  width: 50%;
+}
+:is(.exp-pick-image, .ship-pick-image).picked {
+  filter: grayscale(0);
+  opacity: 1;
+}
+
 
 @media (max-width: 1000px) and (orientation: landscape) {
 	#turn-portrait {
