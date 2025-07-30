@@ -5,6 +5,7 @@ let dataExport;
 let currScreen = 0;
 const activeContract = {}
 const session_id = localStorage.getItem('session_id') || Math.random().toString(36).substring(2, 15);
+let contract_id;
 localStorage.setItem('session_id', session_id);
 
 // Rating history system
@@ -221,6 +222,31 @@ function registerContract(contract, accepted) {
 }
 
 function registerFlight(flight, accepted, weight) {
+  contract_id = Math.random().toString(36).substring(2, 15);
+  if (accepted) {
+    let settings = {}
+    settings["complexity-min"] = getSetting("complexity", true);
+    settings["complexity-max"] = getSetting("complexity", false);
+    settings["roughness-min"] = getSetting("roughness", true);
+    settings["roughness-max"] = getSetting("roughness", false);
+    fetch("https://fayuseaeelvpvgtcsxvd.supabase.co/rest/v1/contracts", {
+    method: 'POST',
+      headers: {
+        'apikey': 'sb_publishable_KieZSA6VwitqJffkvyefKA_R2mOy2H-',
+        'Authorization': 'Bearer sb_publishable_KieZSA6VwitqJffkvyefKA_R2mOy2H-',
+        'Content-Type': 'application/json',
+        "session_id": session_id
+      },
+      body: JSON.stringify({
+        session_id: session_id,
+        contract: flight,
+        contract_id: contract_id,
+        settings: settings,
+      })
+    }
+  )
+  }
+
   // Register mission
   if (flight.mission && stats.missionStats[flight.mission]) {
     const missionGroup = dataExport.Missions[flight.mission]?.group;
@@ -260,20 +286,18 @@ function applyRating(origRating, actRating, threshold, relWeight, ratingCount) {
 
 function applyContractRating(contract, rating) {
   totalRatings++;
-  fetch("https://fayuseaeelvpvgtcsxvd.supabase.co/rest/v1/gtContractRatingDump", {
+  fetch(`https://fayuseaeelvpvgtcsxvd.supabase.co/rest/v1/contract_rating`, {
     method: 'POST',
-      headers: {
-        'apikey': 'sb_publishable_KieZSA6VwitqJffkvyefKA_R2mOy2H-',
-        'Authorization': 'Bearer sb_publishable_KieZSA6VwitqJffkvyefKA_R2mOy2H-',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        session_id: session_id,
-        contract,
-        rating
-      })
-    }
-  )
+    headers: {
+      'apikey': 'sb_publishable_KieZSA6VwitqJffkvyefKA_R2mOy2H-',
+      'Authorization': 'Bearer sb_publishable_KieZSA6VwitqJffkvyefKA_R2mOy2H-',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      contract_id: contract_id,
+      rating
+    })
+  });
   // Define contract elements and their properties
   const elements = [
     ...Object.entries(dataExport.Missions).filter(m => m[1].MissionGroup === dataExport.Missions[contract.mission]?.MissionGroup).map(
