@@ -339,7 +339,7 @@ select {
   background-position: center;
 }
 .contract-image-wrap {
-  width: 31%;
+  width: min(280px, 31%);
   margin: 3px;
   display: inline-block;
   aspect-ratio: 1.5;
