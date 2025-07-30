@@ -348,6 +348,7 @@ select {
 .contract-image {
   width: 100%;
   height: 100%;
+  aspect-ratio: 1.5;  /* thanks safari */
   background-size: contain;
   display: inline-block;
   background-repeat: no-repeat;
