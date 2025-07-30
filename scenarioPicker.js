@@ -59,6 +59,40 @@ const ratingConstants = {
 
 let totalRatings = 0;
 
+function bindInputPersistence() {
+  const inputs = document.querySelectorAll('input, select, textarea');
+
+  inputs.forEach((input) => {
+    const id = input.id || input.name;
+    if (!id) return; // Skip if no identifier
+
+    // Load saved value
+    const saved = localStorage.getItem(`persist:${id}`);
+    if (saved !== null) {
+      if (input.type === "checkbox") {
+        input.checked = saved === "true";
+      } else if (input.type === "radio") {
+        if (input.value === saved) input.checked = true;
+      } else {
+        input.value = saved;
+      }
+    }
+
+    // Save on change
+    input.addEventListener('change', () => {
+      if (input.type === "checkbox") {
+        localStorage.setItem(`persist:${id}`, input.checked);
+      } else if (input.type === "radio") {
+        if (input.checked) {
+          localStorage.setItem(`persist:${id}`, input.value);
+        }
+      } else {
+        localStorage.setItem(`persist:${id}`, input.value);
+      }
+    });
+  });
+}
+
 async function setup() {
   try {
     response = await fetch('./dataExport.json');
@@ -81,6 +115,7 @@ async function setup() {
 
   switchPickerScreen(1)
   bindButtons();
+  bindInputPersistence();
   setupOptions();
 }
 
@@ -414,6 +449,7 @@ function setupDoubleRange(containerId, valuesId) {
 
 function setupOptions() {
   var gt2Checkbox = document.getElementById('have-GT2');
+  var gt3Checkbox = document.getElementById('have-GT3');
   var shipSelects = document.querySelectorAll('.ship-select');
   document.querySelectorAll('.digital-rr-button').forEach(el => {
     el.addEventListener('click', function(evt) {
@@ -429,6 +465,7 @@ function setupOptions() {
     evt.target.parentNode.parentNode.parentNode.querySelectorAll("*").forEach(function(el) {
       if (el.type === "checkbox") {
         el.checked = evt.target.checked;
+        el.dispatchEvent(new Event("change", { bubbles: true }));
       }
     });
   });
@@ -437,10 +474,12 @@ function setupOptions() {
     evt.target.parentNode.parentNode.parentNode.querySelectorAll("*").forEach(function(el) {
       if (el.type === "checkbox") {
         el.checked = evt.target.checked;
+        el.dispatchEvent(new Event("change", { bubbles: true }));
       }
     });
   });
   document.getElementById("gt2-options").style.display = gt2Checkbox.checked ? "" : "none";
+  document.getElementById("gt3-options").style.display = gt3Checkbox.checked ? "" : "none";
   for (let name of ["gt-option-ships", "gt2-option-ships"]) {
     const setting = document.querySelector(`#${name}`);
     setting.addEventListener("change", (evt) => {
@@ -448,6 +487,7 @@ function setupOptions() {
         const otherSetting = ["gt-option-ships", "gt2-option-ships"].find(n => n !== name);
         document.querySelectorAll(`#${otherSetting}`).forEach(el => {
           el.checked = true;
+          el.dispatchEvent(new Event("change", { bubbles: true }));
         });
       }
     });
@@ -459,6 +499,7 @@ function setupOptions() {
         const otherSetting = ["have-digital-rr", "gt2-option-rr"].find(n => n !== name);
         document.querySelectorAll(`#${otherSetting}`).forEach(el => {
           el.checked = false;
+          el.dispatchEvent(new Event("change", { bubbles: true }));
         });
       }
     });
