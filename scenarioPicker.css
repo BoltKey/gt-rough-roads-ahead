@@ -272,6 +272,7 @@ select {
 .contract-box .contract-vips,
 .contract-box .contract-rr {
   margin-bottom: 15px;
+  height: 17%;
 }
 
 .contract-box .i-button {
@@ -339,11 +340,12 @@ select {
   background-position: center;
 }
 .contract-image-wrap {
-  width: min(280px, 31%);
+  max-width: 31%;
   margin: 3px;
   display: inline-block;
   aspect-ratio: 1.5;
   position: relative;
+  height: 100%;
 }
 .contract-image {
   width: 100%;
