@@ -428,6 +428,9 @@ select {
 .contract-image.mission-image[data-mission="16"] {
   background-image: url(images/mission-images/contract_icons_mission16.webp);
 }
+.contract-image.mission-image[data-mission="<no mission>"] {
+  background-image: url(images/mission-images/contract_icons_nomission.webp);
+}
 
 .unselected .contract-image:not(.contract-image-setting, .contract-image-wrap) {
   filter: grayscale();
