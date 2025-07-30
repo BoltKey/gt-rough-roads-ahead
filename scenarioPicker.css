@@ -146,6 +146,12 @@ span[data-id='have-digital-rr'] {
   left: 0;
 }
 
+.popup-wrap.popup-mission .mission-image {
+  width: 80%;
+  aspect-ratio: 1.5;
+  margin: 0 auto;
+}
+
 .picker-screen .popup {
   position: absolute;
   top: 2%;
@@ -380,58 +386,58 @@ select {
 .contract-image.ship-image[data-ship="shipIIIA"] {
   background-image: url(images/contract-icon/contract_icons_ship3a.webp);
 }
-.contract-image.mission-image {
+.mission-image {
   background-image: url(images/mission-images/contract_icons_mission.webp);
 }
-.contract-image.mission-image[data-mission="1"] {
+.mission-image[data-mission="1"] {
   background-image: url(images/mission-images/contract_icons_mission01.webp);
 }
-.contract-image.mission-image[data-mission="2"] {
+.mission-image[data-mission="2"] {
   background-image: url(images/mission-images/contract_icons_mission02.webp);
 }
-.contract-image.mission-image[data-mission="3"] {
+.mission-image[data-mission="3"] {
   background-image: url(images/mission-images/contract_icons_mission03.webp);
 }
-.contract-image.mission-image[data-mission="4"] {
+.mission-image[data-mission="4"] {
   background-image: url(images/mission-images/contract_icons_mission04.webp);
 }
-.contract-image.mission-image[data-mission="5"] {
+.mission-image[data-mission="5"] {
   background-image: url(images/mission-images/contract_icons_mission05.webp);
 }
-.contract-image.mission-image[data-mission="6"] {
+.mission-image[data-mission="6"] {
   background-image: url(images/mission-images/contract_icons_mission06.webp);
 }
-.contract-image.mission-image[data-mission="7"] {
+.mission-image[data-mission="7"] {
   background-image: url(images/mission-images/contract_icons_mission07.webp);
 }
-.contract-image.mission-image[data-mission="8"], .contract-image.mission-image[data-mission="8a"] {
+.mission-image[data-mission="8"], .mission-image[data-mission="8a"] {
   background-image: url(images/mission-images/contract_icons_mission08.webp);
 }
-.contract-image.mission-image[data-mission="9"] {
+.mission-image[data-mission="9"] {
   background-image: url(images/mission-images/contract_icons_mission09.webp);
 }
-.contract-image.mission-image[data-mission="10"] {
+.mission-image[data-mission="10"] {
   background-image: url(images/mission-images/contract_icons_mission10.webp);
 }
-.contract-image.mission-image[data-mission="11"] {
+.mission-image[data-mission="11"] {
   background-image: url(images/mission-images/contract_icons_mission11.webp);
 }
-.contract-image.mission-image[data-mission="12"] {
+.mission-image[data-mission="12"] {
   background-image: url(images/mission-images/contract_icons_mission12.webp);
 }
-.contract-image.mission-image[data-mission="13"] {
+.mission-image[data-mission="13"] {
   background-image: url(images/mission-images/contract_icons_mission13.webp);
 }
-.contract-image.mission-image[data-mission="14"] {
+.mission-image[data-mission="14"] {
   background-image: url(images/mission-images/contract_icons_mission14.webp);
 }
-.contract-image.mission-image[data-mission="15"] {
+.mission-image[data-mission="15"] {
   background-image: url(images/mission-images/contract_icons_mission15.webp);
 }
-.contract-image.mission-image[data-mission="16"] {
+.mission-image[data-mission="16"] {
   background-image: url(images/mission-images/contract_icons_mission16.webp);
 }
-.contract-image.mission-image[data-mission="<no mission>"] {
+.mission-image[data-mission="<no mission>"] {
   background-image: url(images/mission-images/contract_icons_nomission.webp);
 }
 
