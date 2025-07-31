@@ -113,6 +113,10 @@ let app = {
     this.changeLang(this.lang)
 		this.resizeWindow();
 		this.updateRondell();
+    let params = new URLSearchParams(window.location.search);
+    if (params.get("tab")) {
+      this.changeTab(params.get("tab"));
+    }
 	},
 
 
